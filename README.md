@@ -41,11 +41,14 @@ Athletix Pro è un'applicazione open source progettata per manager, allenatori e
 
 8. **Integrazione con sensori**
    - Supporto per sensori di battito cardiaco, GPS, e dati sul sonno.
+  
+9. **Integrazione con un calendario**
+   - Calendario personalizzato per utente per pianificare gare, eventi ed allenamenti.
 
 ## Funzionalità future
-- Integrazione con un calendario per pianificare gare e allenamenti.
 - Analisi avanzata dei dati (grafici, trend e suggerimenti per migliorare le performance).
 - Supporto multilingua.
+- Integrazione con sensori ed attrezzatura aggiuntivi.
 
 ## Licenza
 
