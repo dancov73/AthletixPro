@@ -103,7 +103,7 @@ This project is distributed under the **GPL-3.0** license. See the [LICENSE](LIC
 
 ************************************
 
-*Ita
+*Ita*
 
 Athletix Pro è un'applicazione open source progettata per manager, allenatori e atleti di atletica leggera. Offre strumenti avanzati per gestire squadre, monitorare allenamenti, testare performance, comunicare tra utenti e confrontare atleti. La piattaforma è pensata per essere personalizzabile e scalabile, adatta sia a livello giovanile che assoluto.
 
@@ -157,4 +157,3 @@ Athletix Pro è un'applicazione open source progettata per manager, allenatori e
 ## Licenza
 
 Questo progetto è distribuito sotto la licenza **GPL-3.0**. Vedi il file [LICENSE](LICENSE) per maggiori dettagli.
-*
