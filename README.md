@@ -4,7 +4,7 @@ Open source web app to monitor athletes' training and performance.
 
 Athletix Pro is an open-source application designed for athletics managers, coaches, and athletes. It offers advanced tools to manage teams, monitor training sessions, test performance, enable user communication, and compare athletes. The platform is customizable and scalable, suitable for both youth and senior levels.
 
-##Key Features
+## Key Features
 
 1. **Interactive Dashboard**
 
