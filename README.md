@@ -8,82 +8,82 @@ Athletix Pro is an open-source application designed for athletics managers, coac
 
 1. **Interactive Dashboard**
 
-    - Overview of athletes' performance.
+   - Overview of athletes' performance.
 
-    - Display of past and upcoming training sessions, tests, and competitions.
+   - Display of past and upcoming training sessions, tests, and competitions.
 
 
 
 2. **Team and Category Management**
 
-    - Creation and management of teams and training groups.
+   - Creation and management of teams and training groups.
 
-    - Automatic calculation of federation categories (based on age and birth year).
+   - Automatic calculation of federation categories (based on age and birth year).
 
-    - Assignment of athletes to their respective teams and groups.
+   - Assignment of athletes to their respective teams and groups.
 
 
 
 3. **Athlete Management**
 
-    - Athlete profile with personal data (age, gender, height, weight, VO2max, FTP, etc.).
+   - Athlete profile with personal data (age, gender, height, weight, VO2max, FTP, etc.).
 
-    - Performance history per athlete, including best times for each event.
+   - Performance history per athlete, including best times for each event.
 
 
 
 4. **User Communication**
 
-    - Internal messaging system between users.
+   - Internal messaging system between users.
 
-    - Distinct roles with customized functionalities:
+   - Distinct roles with customized functionalities:
 
-      - Manager: oversees and manages the entire system.
+     - Manager: oversees and manages the entire system.
 
-      - Coach: manages training sessions and communicates with athletes and parents.
+     - Coach: manages training sessions and communicates with athletes and parents.
 
-      - Athlete: views personal data and communicates with coaches and managers.
+     - Athlete: views personal data and communicates with coaches and managers.
 
-      - Parent: limited access to the athlete's data and communication with the coach.
+     - Parent: limited access to the athlete's data and communication with the coach.
 
 
 
 
 5. **Training Monitoring**
 
-    - Creation of daily, weekly, or monthly training plans.
+   - Creation of daily, weekly, or monthly training plans.
 
-    - Customizable modules for specific training sessions (e.g., sprint, endurance).
+   - Customizable modules for specific training sessions (e.g., sprint, endurance).
 
 
 
 6. **Tests and Trials**
 
-    - Recording trials with integrated stopwatches.
+   - Recording trials with integrated stopwatches.
 
-    - Selection of participating athletes and recording of individual times.
+   - Selection of participating athletes and recording of individual times.
 
-    - Comparison of results to improve performance.
+   - Comparison of results to improve performance.
 
 
 
 7. **Athlete Comparison**
 
-    - Charts and tables to compare performance.
+   - Charts and tables to compare performance.
 
-    - Monitoring progress over time.
+   - Monitoring progress over time.
 
 
 
 8. **Sensor Integration**
 
-    - Support for heart rate monitors, GPS, and sleep tracking data.
+   - Support for heart rate monitors, GPS, and sleep tracking data.
 
 
 
 9. **Calendar Integration**
 
-    - Personalized user calendar to plan competitions, events, and training sessions.
+   - Personalized user calendar to plan competitions, events, and training sessions.
 
 
 
@@ -103,7 +103,7 @@ This project is distributed under the **GPL-3.0** license. See the [LICENSE](LIC
 
 ************************************
 
-Ita
+*Ita*
 
 Athletix Pro è un'applicazione open source progettata per manager, allenatori e atleti di atletica leggera. Offre strumenti avanzati per gestire squadre, monitorare allenamenti, testare performance, comunicare tra utenti e confrontare atleti. La piattaforma è pensata per essere personalizzabile e scalabile, adatta sia a livello giovanile che assoluto.
 
