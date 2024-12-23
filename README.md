@@ -1,6 +1,6 @@
 # AthletixPro
 
-Open source web app to monitor athletes' training and performance.
+*Open source web app to monitor athletes' training and performance.*
 
 Athletix Pro is an open-source application designed for athletics managers, coaches, and athletes. It offers advanced tools to manage teams, monitor training sessions, test performance, enable user communication, and compare athletes. The platform is customizable and scalable, suitable for both youth and senior levels.
 
@@ -18,7 +18,7 @@ Athletix Pro is an open-source application designed for athletics managers, coac
 
     - Creation and management of teams and training groups.
 
-    - Automatic calculation of FIDAL categories (based on age and birth year).
+    - Automatic calculation of federation categories (based on age and birth year).
 
     - Assignment of athletes to their respective teams and groups.
 
