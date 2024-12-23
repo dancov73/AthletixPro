@@ -8,98 +8,98 @@ Athletix Pro is an open-source application designed for athletics managers, coac
 
 1. **Interactive Dashboard**
 
-     - Overview of athletes' performance.
+    - Overview of athletes' performance.
 
-     - Display of past and upcoming training sessions, tests, and competitions.
-
-
-
-2. Team and Category Management
-
-Creation and management of teams and training groups.
-
-Automatic calculation of FIDAL categories (based on age and birth year).
-
-Assignment of athletes to their respective teams and groups.
+    - Display of past and upcoming training sessions, tests, and competitions.
 
 
 
-3. Athlete Management
+2. **Team and Category Management**
 
-Athlete profile with personal data (age, gender, height, weight, VO2max, FTP, etc.).
+    - Creation and management of teams and training groups.
 
-Performance history per athlete, including best times for each event.
+    - Automatic calculation of FIDAL categories (based on age and birth year).
 
-
-
-4. User Communication
-
-Internal messaging system between users.
-
-Distinct roles with customized functionalities:
-
-Manager: oversees and manages the entire system.
-
-Coach: manages training sessions and communicates with athletes and parents.
-
-Athlete: views personal data and communicates with coaches and managers.
-
-Parent: limited access to the athlete's data and communication with the coach.
+    - Assignment of athletes to their respective teams and groups.
 
 
 
+3. **Athlete Management**
 
-5. Training Monitoring
+    - Athlete profile with personal data (age, gender, height, weight, VO2max, FTP, etc.).
 
-Creation of daily, weekly, or monthly training plans.
-
-Customizable modules for specific training sessions (e.g., sprint, endurance).
-
-
-
-6. Tests and Trials
-
-Recording trials with integrated stopwatches.
-
-Selection of participating athletes and recording of individual times.
-
-Comparison of results to improve performance.
+    - Performance history per athlete, including best times for each event.
 
 
 
-7. Athlete Comparison
+4. **User Communication**
 
-Charts and tables to compare performance.
+    - Internal messaging system between users.
 
-Monitoring progress over time.
+    - Distinct roles with customized functionalities:
 
+      - Manager: oversees and manages the entire system.
 
+      - Coach: manages training sessions and communicates with athletes and parents.
 
-8. Sensor Integration
+      - Athlete: views personal data and communicates with coaches and managers.
 
-Support for heart rate monitors, GPS, and sleep tracking data.
-
-
-
-9. Calendar Integration
-
-Personalized user calendar to plan competitions, events, and training sessions.
+      - Parent: limited access to the athlete's data and communication with the coach.
 
 
 
 
-Future Features
+5. **Training Monitoring**
 
-Advanced data analysis (charts, trends, and suggestions for performance improvement).
+    - Creation of daily, weekly, or monthly training plans.
 
-Multilingual support.
-
-Integration with additional sensors and equipment.
+    - Customizable modules for specific training sessions (e.g., sprint, endurance).
 
 
-License
 
-This project is distributed under the GPL-3.0 license. See the LICENSE file for more details.
+6. **Tests and Trials**
+
+    - Recording trials with integrated stopwatches.
+
+    - Selection of participating athletes and recording of individual times.
+
+    - Comparison of results to improve performance.
+
+
+
+7. **Athlete Comparison**
+
+    - Charts and tables to compare performance.
+
+    - Monitoring progress over time.
+
+
+
+8. **Sensor Integration**
+
+    - Support for heart rate monitors, GPS, and sleep tracking data.
+
+
+
+9. **Calendar Integration**
+
+    - Personalized user calendar to plan competitions, events, and training sessions.
+
+
+
+
+## Future Features
+
+- Advanced data analysis (charts, trends, and suggestions for performance improvement).
+
+- Multilingual support.
+
+- Integration with additional sensors and equipment.
+
+
+## License
+
+This project is distributed under the **GPL-3.0** license. See the [LICENSE](LICENSE) file for more details.
 
 ************************************
 
