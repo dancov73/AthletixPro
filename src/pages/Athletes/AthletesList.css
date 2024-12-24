@@ -1,0 +1,39 @@
+.athletes-list {
+    margin: 20px;
+  }
+  
+  .athletes-list h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .athletes-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .athletes-list table th,
+  .athletes-list table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .athletes-list table th {
+    background-color: #f4f4f4;
+  }
+  
+  .add-athlete-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #ff9800;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .add-athlete-btn:hover {
+    background-color: #e68900;
+  }
+  
