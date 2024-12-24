@@ -38,13 +38,13 @@ Athletix Pro is an open-source application designed for athletics managers, coac
 
    - Distinct roles with customized functionalities:
 
-     - Manager: oversees and manages the entire system.
+     - **Manager**: oversees and manages the entire system.
 
-     - Coach: manages training sessions and communicates with athletes and parents.
+     - **Coach**: manages training sessions and communicates with athletes and parents.
 
-     - Athlete: views personal data and communicates with coaches and managers.
+     - **Athlete**: views personal data and communicates with coaches and managers.
 
-     - Parent: limited access to the athlete's data and communication with the coach.
+     - **Parent**: limited access to the athlete's data and communication with the coach.
 
 
 
