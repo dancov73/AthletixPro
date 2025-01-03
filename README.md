@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Athletix-Pro
-=======
 # AthletixPro
 
 **Open source web app to monitor athletes' training and performance.**
@@ -160,4 +157,3 @@ Athletix Pro è un'applicazione open source progettata per manager, allenatori e
 ## Licenza
 
 Questo progetto è distribuito sotto la licenza **GPL-3.0**. Vedi il file [LICENSE](LICENSE) per maggiori dettagli.
->>>>>>> 4cd9d10548810e1ddb7c38f0bc2a174d0cacac17
