@@ -22,6 +22,7 @@ import CoachProfile from './pages/CoachProfile';
 import AthleteProfile from './pages/AthleteProfile';
 import ParentProfile from './pages/ParentProfile';
 import SocialCalendar from './pages/SocialCalendar'; // Import the SocialCalendar component
+import RegistrationForm from './components/RegistrationForm'; // Import the RegistrationForm component
 
 const theme = createTheme({
   palette: {
@@ -62,6 +63,7 @@ function App() {
                     <Route path="/allenamenti" element={<Allenamenti />} />
                     <Route path="/profilo" element={<Profilo />} />
                     <Route path="/login" element={<Login setUser={setUser} />} /> {/* Add Login route */}
+                    <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
                     <Route path="/profilo/amministratore" element={<AdminProfile />} />
                     <Route path="/profilo/allenatore" element={<CoachProfile />} />
                     <Route path="/profilo/atleta" element={<AthleteProfile />} />

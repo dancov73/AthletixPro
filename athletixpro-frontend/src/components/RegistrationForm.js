@@ -3,11 +3,13 @@ import { Box, TextField, Button, MenuItem, IconButton, InputAdornment } from '@m
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import countries from '../data/countries';
+import { registerUser } from '../supabaseClient'; // Import registerUser function
 
-const RegistrationForm = ({ onSubmit, setIsMinor }) => {
+const RegistrationForm = ({ onSubmit }) => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isMinor, setIsMinor] = useState(false); // Define isMinor state
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
@@ -123,10 +125,28 @@ const RegistrationForm = ({ onSubmit, setIsMinor }) => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
+      try {
+        const { error } = await registerUser(formData.email, formData.password);
+        if (error) {
+          console.error('Error registering user:', error);
+        } else {
+          const { data, error: insertError } = await supabase
+            .from('users')
+            .insert([formData]);
+
+          if (insertError) {
+            console.error('Error inserting data:', insertError);
+          } else {
+            console.log('Data inserted successfully:', data);
+            onSubmit(formData);
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
 

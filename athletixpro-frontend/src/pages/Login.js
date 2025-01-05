@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import supabase from '../supabaseClient'; // Import supabase client
+import { useNavigate, Link } from 'react-router-dom';
+import { supabase } from '../supabaseClient'; // Import supabase client
 
 const Login = ({ setUser }) => {
   const { t } = useTranslation();
@@ -54,10 +54,6 @@ const Login = ({ setUser }) => {
     setShowPassword(!showPassword);
   };
 
-  const handleRegisterClick = () => {
-    navigate('/register'); // Ensure navigation to Register page
-  };
-
   return (
     <Box sx={{ maxWidth: 400, mx: 'auto', mt: 8 }}>
       <Typography variant="h4" align="center">{t('login')}</Typography>
@@ -95,7 +91,7 @@ const Login = ({ setUser }) => {
           helperText={errors.password}
         />
         <Button fullWidth variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleLoginClick}>{t('login')}</Button>
-        <Button fullWidth variant="outlined" color="secondary" sx={{ mt: 2 }} onClick={handleRegisterClick}>{t('register')}</Button>
+        <Button fullWidth component={Link} to="/register" variant="outlined" color="secondary" sx={{ mt: 2 }}>{t('register')}</Button>
       </Box>
     </Box>
   );
