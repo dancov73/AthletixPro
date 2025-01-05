@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import countries from '../data/countries';
 import { registerUser } from '../supabaseClient'; // Import registerUser function
+import { supabase } from '../supabaseClient';
 
 const RegistrationForm = ({ onSubmit }) => {
   const { t } = useTranslation();
@@ -13,7 +14,6 @@ const RegistrationForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
-    id: '',
     email: '',
     phone: '',
     password: '',
@@ -73,9 +73,6 @@ const RegistrationForm = ({ onSubmit }) => {
 
   const validateForm = () => {
     let tempErrors = {};
-    if (!formData.id) {
-      tempErrors.id = t('required'); // Validate User ID
-    }
     if (!formData.name) {
       tempErrors.name = t('required');
     } else if (!validateName(formData.name)) {
@@ -128,23 +125,44 @@ const RegistrationForm = ({ onSubmit }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
-      try {
-        const { error } = await registerUser(formData.email, formData.password);
-        if (error) {
-          console.error('Error registering user:', error);
-        } else {
-          const { data, error: insertError } = await supabase
-            .from('users')
-            .insert([formData]);
+      const userData = {
+        name: formData.name,
+        surname: formData.surname,
+        email: formData.email,
+        phone: formData.phone || null,
+        country: formData.country,
+        team: formData.team,
+        sector: formData.sector,
+        role: formData.role,
+        dateOfBirth: formData.dateOfBirth,
+        parentName: isMinor ? formData.parentName : null,
+        parentSurname: isMinor ? formData.parentSurname : null,
+        parentPhone: isMinor ? formData.parentPhone : null,
+        parentEmail: isMinor ? formData.parentEmail : null,
+      };
 
-          if (insertError) {
-            console.error('Error inserting data:', insertError);
-          } else {
-            console.log('Data inserted successfully:', data);
-            onSubmit(formData);
-          }
+      try {
+        const { user, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (error) {
+          setErrors({ submit: t('signup_failed') });
+          console.error('Error signing up:', error);
+          return;
+        }
+
+        const { data, error: insertError } = await supabase.from('users').insert([userData]);
+        if (insertError) {
+          setErrors({ submit: t('data_insert_failed') });
+          console.error('Error inserting data:', insertError);
+        } else {
+          console.log('Data inserted successfully:', data);
+          onSubmit(formData);
         }
       } catch (error) {
+        setErrors({ submit: t('unexpected_error') });
         console.error('Error:', error);
       }
     }
@@ -181,17 +199,6 @@ const RegistrationForm = ({ onSubmit }) => {
         onChange={handleInputChange}
         error={!!errors.surname}
         helperText={errors.surname}
-      />
-      <TextField
-        fullWidth
-        label="User ID" // Ensure User ID field is visible
-        margin="normal"
-        required
-        name="id"
-        value={formData.id}
-        onChange={handleInputChange}
-        error={!!errors.id}
-        helperText={errors.id}
       />
       <TextField
         fullWidth
