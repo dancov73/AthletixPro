@@ -60,5 +60,18 @@
     "Monitoraggio Atleti": "Monitoreo de Atletas",
     "I miei Allenamenti": "Mis Entrenamientos",
     "Statistiche": "Estadísticas",
-    "Progressi Figlio": "Progreso del Hijo"
+    "Progressi Figlio": "Progreso del Hijo",
+    "profile_type": "Tipo de Perfil",
+    "admin": "Administrador",
+    "coach": "Entrenador",
+    "athlete": "Atleta",
+    "parent": "Padre",
+    "loading": "Cargando...",
+    "profile_of": "Perfil de",
+    "age": "Edad",
+    "years": "años",
+    "category": "Categoría",
+    "specialization": "Especialización",
+    "best_performances": "Mejores Rendimientos",
+    "performance_graph": "Gráfico de Rendimiento"
 }

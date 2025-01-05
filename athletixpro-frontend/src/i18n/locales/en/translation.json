@@ -61,5 +61,18 @@
     "Monitoraggio Atleti": "Athlete Monitoring",
     "I miei Allenamenti": "My Trainings",
     "Statistiche": "Statistics",
-    "Progressi Figlio": "Child Progress"
+    "Progressi Figlio": "Child Progress",
+    "profile_type": "Profile Type",
+    "admin": "Admin",
+    "coach": "Coach",
+    "athlete": "Athlete",
+    "parent": "Parent",
+    "loading": "Loading...",
+    "profile_of": "Profile of",
+    "age": "Age",
+    "years": "years",
+    "category": "Category",
+    "specialization": "Specialization",
+    "best_performances": "Best Performances",
+    "performance_graph": "Performance Graph"
 }

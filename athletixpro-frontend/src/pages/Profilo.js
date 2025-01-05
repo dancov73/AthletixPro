@@ -3,12 +3,14 @@ import { Box, Typography, Card, CardContent, MenuItem, Select, FormControl, Inpu
 import AthletePerformanceGraph from '../components/Dashboard/PerformanceGraph';
 import { getAthleteProfile, getAdminProfile, getCoachProfile, getParentProfile } from '../services/profileService';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Profilo = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const initialProfileType = queryParams.get('type') || 'Atleta';
+  const initialProfileType = queryParams.get('type') || 'Athlete';
 
   const [profileType, setProfileType] = useState(initialProfileType);
   const [profileData, setProfileData] = useState(null);
@@ -18,23 +20,23 @@ const Profilo = () => {
       try {
         let data;
         switch (profileType) {
-          case 'Amministratore':
+          case 'Admin':
             data = await getAdminProfile();
             break;
-          case 'Allenatore':
+          case 'Coach':
             data = await getCoachProfile();
             break;
-          case 'Genitore':
+          case 'Parent':
             data = await getParentProfile();
             break;
-          case 'Atleta':
+          case 'Athlete':
           default:
             data = await getAthleteProfile();
             break;
         }
         setProfileData(data);
       } catch (error) {
-        console.error(`Errore nel caricamento dei dati del profilo ${profileType}`, error);
+        console.error(`Error loading profile data for ${profileType}`, error);
       }
     };
 
@@ -50,7 +52,7 @@ const Profilo = () => {
   if (!profileData) {
     return (
       <Box>
-        <Typography variant="h4">Caricamento...</Typography>
+        <Typography variant="h4">{t('loading')}</Typography>
       </Box>
     );
   }
@@ -58,31 +60,31 @@ const Profilo = () => {
   return (
     <Box sx={{ padding: 3 }}>
       <FormControl fullWidth sx={{ marginBottom: 3 }}>
-        <InputLabel id="profile-type-label">Tipo di Profilo</InputLabel>
+        <InputLabel id="profile-type-label">{t('profile_type')}</InputLabel>
         <Select
           labelId="profile-type-label"
           value={profileType}
-          label="Tipo di Profilo"
+          label={t('profile_type')}
           onChange={handleProfileTypeChange}
         >
-          <MenuItem value="Amministratore">Amministratore</MenuItem>
-          <MenuItem value="Allenatore">Allenatore</MenuItem>
-          <MenuItem value="Atleta">Atleta</MenuItem>
-          <MenuItem value="Genitore">Genitore</MenuItem>
+          <MenuItem value="Admin">{t('admin')}</MenuItem>
+          <MenuItem value="Coach">{t('coach')}</MenuItem>
+          <MenuItem value="Athlete">{t('athlete')}</MenuItem>
+          <MenuItem value="Parent">{t('parent')}</MenuItem>
         </Select>
       </FormControl>
 
       <Typography variant="h4" gutterBottom>
-        Profilo di {profileData.name}
+        {t('profile_of')} {profileData.name}
       </Typography>
       <Typography variant="body1" paragraph>
-        Età: {profileData.age} anni
+        {t('age')}: {profileData.age} {t('years')}
       </Typography>
       <Typography variant="body1" paragraph>
-        Categoria: {profileData.category}
+        {t('category')}: {profileData.category}
       </Typography>
       <Typography variant="body1" paragraph>
-        Specializzazione: {profileData.specialization}
+        {t('specialization')}: {profileData.specialization}
       </Typography>
       <Typography variant="body1" paragraph>
         VO2max: {profileData.vo2max}
@@ -90,7 +92,7 @@ const Profilo = () => {
 
       <Card sx={{ marginTop: 2 }}>
         <CardContent>
-          <Typography variant="h6">Le migliori prestazioni:</Typography>
+          <Typography variant="h6">{t('best_performances')}:</Typography>
           <ul>
             {profileData.bestPerformances.map((performance, index) => (
               <li key={index}>{performance.event}: {performance.time}</li>
@@ -101,7 +103,7 @@ const Profilo = () => {
 
       <Box sx={{ marginTop: 3 }}>
         <Typography variant="h6" gutterBottom>
-          Grafico delle performance
+          {t('performance_graph')}
         </Typography>
         <AthletePerformanceGraph data={profileData.performanceData} />
       </Box>

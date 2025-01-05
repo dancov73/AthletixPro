@@ -1,6 +1,5 @@
-// src/components/Navbar.js
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, Menu, MenuItem } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
@@ -10,18 +9,18 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
 
-  const handleClick = (event) => {
+  const handleProfileMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleProfileMenuClose = () => {
     setAnchorEl(null);
   };
 
-  const handleMenuItemClick = (profileType, path) => {
+  const handleProfileMenuItemClick = (profileType, path) => {
     setProfileType(profileType);
     navigate(path);
-    handleClose();
+    handleProfileMenuClose();
   };
 
   return (
@@ -38,17 +37,17 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
           component={Link}
           to="/"
           sx={{
-            borderRadius: '5px', // Less rounded corners
+            borderRadius: '5px',
             padding: '5px 15px',
             fontSize: '1.2rem',
             fontWeight: 'bold',
             fontStyle: 'italic',
-            color: '#212121', // Dark font color
-            backgroundColor: 'inherit', // Same color as navbar
+            color: '#212121',
+            backgroundColor: 'inherit',
             textTransform: 'none',
-            marginRight: '5px', // Add spacing between buttons
+            marginRight: '5px',
             '&:hover': {
-              backgroundColor: '#e65100', // Darker orange on hover
+              backgroundColor: '#e65100',
             },
           }}
         >
@@ -60,11 +59,11 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
           component={Link}
           to="/calendario-sociale"
           sx={{
-            color: 'white', // Revert to previous font color
-            backgroundColor: '#e65100', // Darker orange color
-            marginRight: '5px', // Add spacing between buttons
+            color: 'white',
+            backgroundColor: '#e65100',
+            marginRight: '5px',
             '&:hover': {
-              backgroundColor: '#bf360c', // Even darker orange on hover
+              backgroundColor: '#bf360c',
             },
           }}
         >
@@ -72,13 +71,13 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
         </Button>
         <Button
           color="inherit"
-          onClick={handleClick}
+          onClick={handleProfileMenuClick}
           sx={{
-            color: 'white', // Revert to previous font color
-            backgroundColor: '#e65100', // Darker orange color
-            marginRight: '5px', // Add spacing between buttons
+            color: 'white',
+            backgroundColor: '#e65100',
+            marginRight: '5px',
             '&:hover': {
-              backgroundColor: '#bf360c', // Even darker orange on hover
+              backgroundColor: '#bf360c',
             },
           }}
         >
@@ -87,12 +86,12 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
-          onClose={handleClose}
+          onClose={handleProfileMenuClose}
         >
-          <MenuItem onClick={() => handleMenuItemClick('Amministratore', '/profilo/amministratore')}>Amministratore</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick('Allenatore', '/profilo/allenatore')}>Allenatore</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick('Atleta', '/profilo/atleta')}>Atleta</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick('Genitore', '/profilo/genitore')}>Genitore</MenuItem>
+          <MenuItem onClick={() => handleProfileMenuItemClick('Admin', '/profilo?type=Admin')}>{t('admin')}</MenuItem>
+          <MenuItem onClick={() => handleProfileMenuItemClick('Coach', '/profilo?type=Coach')}>{t('coach')}</MenuItem>
+          <MenuItem onClick={() => handleProfileMenuItemClick('Athlete', '/profilo?type=Athlete')}>{t('athlete')}</MenuItem>
+          <MenuItem onClick={() => handleProfileMenuItemClick('Parent', '/profilo?type=Parent')}>{t('parent')}</MenuItem>
         </Menu>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <LanguageSelector setLanguage={setLanguage} />
@@ -102,11 +101,11 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
           component={Link}
           to="/login"
           sx={{
-            color: 'white', // Revert to previous font color
-            backgroundColor: '#e65100', // Darker orange color
-            marginRight: '5px', // Add spacing between buttons
+            color: 'white',
+            backgroundColor: '#e65100',
+            marginRight: '5px',
             '&:hover': {
-              backgroundColor: '#bf360c', // Even darker orange on hover
+              backgroundColor: '#bf360c',
             },
           }}
         >

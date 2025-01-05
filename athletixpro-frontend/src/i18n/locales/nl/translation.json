@@ -61,5 +61,18 @@
     "Monitoraggio Atleti": "Atletenmonitoring",
     "I miei Allenamenti": "Mijn Trainingen",
     "Statistiche": "Statistieken",
-    "Progressi Figlio": "Voortgang van het Kind"
+    "Progressi Figlio": "Voortgang van het Kind",
+    "profile_type": "Profieltype",
+    "admin": "Beheerder",
+    "coach": "Coach",
+    "athlete": "Atleet",
+    "parent": "Ouder",
+    "loading": "Laden...",
+    "profile_of": "Profiel van",
+    "age": "Leeftijd",
+    "years": "jaar",
+    "category": "Categorie",
+    "specialization": "Specialisatie",
+    "best_performances": "Beste Prestaties",
+    "performance_graph": "Prestatiegrafiek"
 }
