@@ -4,7 +4,6 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import countries from '../data/countries';
 import { registerUser } from '../supabaseClient'; // Import registerUser function
-import { supabase } from '../supabaseClient';
 
 const RegistrationForm = ({ onSubmit }) => {
   const { t } = useTranslation();
@@ -141,29 +140,16 @@ const RegistrationForm = ({ onSubmit }) => {
         parentEmail: isMinor ? formData.parentEmail : null,
       };
 
-      try {
-        const { user, error } = await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-        });
+      console.log('Submitting user data:', userData);
 
-        if (error) {
-          setErrors({ submit: t('signup_failed') });
-          console.error('Error signing up:', error);
-          return;
-        }
+      const result = await registerUser(formData.email, formData.password, formData.name);
 
-        const { data, error: insertError } = await supabase.from('users').insert([userData]);
-        if (insertError) {
-          setErrors({ submit: t('data_insert_failed') });
-          console.error('Error inserting data:', insertError);
-        } else {
-          console.log('Data inserted successfully:', data);
-          onSubmit(formData);
-        }
-      } catch (error) {
-        setErrors({ submit: t('unexpected_error') });
-        console.error('Error:', error);
+      if (result.error) {
+        setErrors({ submit: t('signup_failed') });
+        console.error('Error signing up:', result.error);
+      } else {
+        console.log('Data inserted successfully:', result.data);
+        onSubmit(formData);
       }
     }
   };
