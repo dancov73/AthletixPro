@@ -4,6 +4,9 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import countries from '../data/countries';
 import { registerUser } from '../supabaseClient'; // Import registerUser function
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient('your-supabase-url', 'your-supabase-key');
 
 const RegistrationForm = ({ onSubmit }) => {
   const { t } = useTranslation();
@@ -125,31 +128,46 @@ const RegistrationForm = ({ onSubmit }) => {
     event.preventDefault();
     if (validateForm()) {
       const userData = {
-        name: formData.name,
-        surname: formData.surname,
-        email: formData.email,
-        phone: formData.phone || null,
-        country: formData.country,
-        team: formData.team,
-        sector: formData.sector,
-        role: formData.role,
-        dateOfBirth: formData.dateOfBirth,
-        parentName: isMinor ? formData.parentName : null,
-        parentSurname: isMinor ? formData.parentSurname : null,
-        parentPhone: isMinor ? formData.parentPhone : null,
-        parentEmail: isMinor ? formData.parentEmail : null,
+        name: formData.name, // Obbligatorio
+        surname: formData.surname, // Obbligatorio
+        email: formData.email, // Obbligatorio e unico
+        phone: formData.phone || null, // Può essere null
+        country: formData.country || null, // Può essere null
+        team: formData.team || null, // Può essere null
+        sector: formData.sector || null, // Può essere null
+        role: formData.role, // Obbligatorio
+        dateOfBirth: formData.dateOfBirth || null, // Deve essere in formato YYYY-MM-DD
+        parentName: isMinor ? formData.parentName : null, // Può essere null
+        parentSurname: isMinor ? formData.parentSurname : null, // Può essere null
+        parentPhone: isMinor ? formData.parentPhone : null, // Può essere null
+        parentEmail: isMinor ? formData.parentEmail : null, // Può essere null
       };
 
-      console.log('Submitting user data:', userData);
+      try {
+        // Registrazione utente in Supabase Auth
+        const { user, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+        });
 
-      const result = await registerUser(formData.email, formData.password, formData.name);
+        if (error) {
+          setErrors({ submit: t('signup_failed') });
+          console.error('Errore durante la registrazione:', error);
+          return;
+        }
 
-      if (result.error) {
-        setErrors({ submit: t('signup_failed') });
-        console.error('Error signing up:', result.error);
-      } else {
-        console.log('Data inserted successfully:', result.data);
-        onSubmit(formData);
+        // Inserimento dati nella tabella "users"
+        const { data, error: insertError } = await supabase.from('users').insert([userData]);
+        if (insertError) {
+          setErrors({ submit: t('data_insert_failed') });
+          console.error('Errore durante l\'inserimento dei dati:', insertError);
+        } else {
+          console.log('Dati inseriti con successo:', data);
+          onSubmit(formData); // Chiamata successiva se necessaria
+        }
+      } catch (error) {
+        setErrors({ submit: t('unexpected_error') });
+        console.error('Errore imprevisto:', error);
       }
     }
   };
