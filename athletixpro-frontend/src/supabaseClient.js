@@ -15,6 +15,11 @@ export const registerUser = async (email, password, fullName) => {
     }
     console.log('Sign up data:', data);
 
+    if (!data.user) {
+      console.error('Sign up failed: No user data returned');
+      return { data: null, error: 'Sign up failed: No user data returned' };
+    }
+
     // Aggiorna la tabella users con i dati aggiuntivi
     const { data: dbData, error: dbError } = await supabase
       .from('users')

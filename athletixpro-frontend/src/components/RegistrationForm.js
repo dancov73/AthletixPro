@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, MenuItem, IconButton, InputAdornment } from '@mui/material';
+import { Box, TextField, Button, MenuItem, IconButton, InputAdornment, Alert } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import countries from '../data/countries';
-import { registerUser } from '../supabaseClient'; // Import registerUser function
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient('your-supabase-url', 'your-supabase-key');
+import { supabase } from '../supabaseClient'; // Import Supabase client from a separate file
 
 const RegistrationForm = ({ onSubmit }) => {
   const { t } = useTranslation();
@@ -31,6 +28,7 @@ const RegistrationForm = ({ onSubmit }) => {
     parentEmail: ''
   });
   const [errors, setErrors] = useState({});
+  const [alert, setAlert] = useState({ type: '', message: '' });
 
   const handleDateOfBirthChange = (event) => {
     const birthDate = new Date(event.target.value);
@@ -124,6 +122,25 @@ const RegistrationForm = ({ onSubmit }) => {
     return Object.keys(tempErrors).length === 0;
   };
 
+  const checkSignupError = async (email) => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('email')
+        .eq('email', email);
+
+      if (error) {
+        console.error('Error fetching user data:', error);
+        return null;
+      }
+
+      return data.length > 0 ? 'Email already exists' : null;
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      return 'Unexpected error';
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
@@ -137,36 +154,68 @@ const RegistrationForm = ({ onSubmit }) => {
         sector: formData.sector || null, // Può essere null
         role: formData.role, // Obbligatorio
         dateOfBirth: formData.dateOfBirth || null, // Deve essere in formato YYYY-MM-DD
-        parentName: isMinor ? formData.parentName : null, // Può essere null
-        parentSurname: isMinor ? formData.parentSurname : null, // Può essere null
-        parentPhone: isMinor ? formData.parentPhone : null, // Può essere null
-        parentEmail: isMinor ? formData.parentEmail : null, // Può essere null
+        parentName: formData.parentName || null,
+        parentSurname: formData.parentSurname || null,
+        parentPhone: formData.parentPhone || null,
+        parentEmail: formData.parentEmail || null
       };
 
       try {
-        // Registrazione utente in Supabase Auth
-        const { user, error } = await supabase.auth.signUp({
+        console.log('Attempting to sign up user:', formData.email);
+        const { data: user, error: signupError } = await supabase.auth.signUp({
           email: formData.email,
           password: formData.password,
         });
 
-        if (error) {
-          setErrors({ submit: t('signup_failed') });
-          console.error('Errore durante la registrazione:', error);
+        if (signupError) {
+          console.error('Signup error:', signupError);
+          const signupErrorMessage = await checkSignupError(formData.email);
+          setErrors({ submit: signupErrorMessage || t('signup_failed') });
+          setAlert({ type: 'error', message: signupErrorMessage || t('signup_failed') });
           return;
         }
 
-        // Inserimento dati nella tabella "users"
-        const { data, error: insertError } = await supabase.from('users').insert([userData]);
-        if (insertError) {
-          setErrors({ submit: t('data_insert_failed') });
-          console.error('Errore durante l\'inserimento dei dati:', insertError);
+        console.log('User signed up successfully:', user);
+        console.log('Attempting to insert user data:', userData);
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            {
+              user_id: user.user.id, // Ensure this is set to the authenticated user's ID
+              name: formData.name,
+              surname: formData.surname,
+              email: formData.email,
+              phone: formData.phone,
+              country: formData.country,
+              team: formData.team,
+              sector: formData.sector,
+              role: formData.role,
+              dateOfBirth: formData.dateOfBirth,
+              parentName: formData.parentName,
+              parentSurname: formData.parentSurname,
+              parentPhone: formData.parentPhone,
+              parentEmail: formData.parentEmail,
+            },
+          ]);
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          if (profileError.message.includes('new row violates row-level security policy')) {
+            setErrors({ submit: t('data_insert_failed_rls') });
+            setAlert({ type: 'error', message: t('data_insert_failed_rls') });
+          } else {
+            setErrors({ submit: t('data_insert_failed') });
+            setAlert({ type: 'error', message: `${t('data_insert_failed')}: ${profileError.message}` }); // Include error message
+          }
         } else {
-          console.log('Dati inseriti con successo:', data);
+          console.log('Profile created successfully:', profile);
+          setAlert({ type: 'success', message: t('registration_successful') });
           onSubmit(formData); // Chiamata successiva se necessaria
         }
       } catch (error) {
+        console.error('Unexpected error:', error); // Log the error
         setErrors({ submit: t('unexpected_error') });
+        setAlert({ type: 'error', message: t('unexpected_error') });
         console.error('Errore imprevisto:', error);
       }
     }
@@ -182,6 +231,11 @@ const RegistrationForm = ({ onSubmit }) => {
 
   return (
     <Box component="form" sx={{ mt: 2 }} onSubmit={handleSubmit}>
+      {alert.message && (
+        <Alert severity={alert.type} sx={{ mb: 2 }}>
+          {alert.message}
+        </Alert>
+      )}
       <TextField
         fullWidth
         label={t('name')}
