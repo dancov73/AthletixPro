@@ -15,8 +15,7 @@ const RegistrationForm = ({ onSubmit }) => {
     surname: '',
     email: '',
     phone: '',
-    password: '',
-    confirmPassword: '',
+    password: '', // Removed confirmPassword
     country: '',
     team: '',
     sector: '',
@@ -71,7 +70,7 @@ const RegistrationForm = ({ onSubmit }) => {
     return phoneWithoutSpaces === '' || phoneWithoutSpaces === formData.country;
   };
 
-  const validateForm = () => {
+  const validateForm = async () => {
     let tempErrors = {};
     if (!formData.name) {
       tempErrors.name = t('required');
@@ -92,7 +91,6 @@ const RegistrationForm = ({ onSubmit }) => {
       tempErrors.phone = t('invalid_phone');
     }
     if (!formData.password) tempErrors.password = t('required');
-    if (formData.password !== formData.confirmPassword) tempErrors.confirmPassword = t('password_mismatch');
     if (!formData.country) tempErrors.country = t('required');
     if (!formData.team) tempErrors.team = t('required');
     if (!formData.sector) tempErrors.sector = t('required');
@@ -122,38 +120,21 @@ const RegistrationForm = ({ onSubmit }) => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const checkSignupError = async (email) => {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('email')
-        .eq('email', email);
-
-      if (error) {
-        console.error('Error fetching user data:', error);
-        return null;
-      }
-
-      return data.length > 0 ? 'Email already exists' : null;
-    } catch (error) {
-      console.error('Unexpected error:', error);
-      return 'Unexpected error';
-    }
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validateForm()) {
+    console.log('Form submitted');
+    if (await validateForm()) {
+      console.log('Form validation passed');
       const userData = {
-        name: formData.name, // Obbligatorio
-        surname: formData.surname, // Obbligatorio
-        email: formData.email, // Obbligatorio e unico
-        phone: formData.phone || null, // Può essere null
-        country: formData.country || null, // Può essere null
-        team: formData.team || null, // Può essere null
-        sector: formData.sector || null, // Può essere null
-        role: formData.role, // Obbligatorio
-        dateOfBirth: formData.dateOfBirth || null, // Deve essere in formato YYYY-MM-DD
+        name: formData.name,
+        surname: formData.surname,
+        email: formData.email,
+        phone: formData.phone || null,
+        country: formData.country,
+        team: formData.team,
+        sector: formData.sector,
+        role: formData.role,
+        dateOfBirth: formData.dateOfBirth,
         parentName: formData.parentName || null,
         parentSurname: formData.parentSurname || null,
         parentPhone: formData.parentPhone || null,
@@ -169,55 +150,33 @@ const RegistrationForm = ({ onSubmit }) => {
 
         if (signupError) {
           console.error('Signup error:', signupError);
-          const signupErrorMessage = await checkSignupError(formData.email);
-          setErrors({ submit: signupErrorMessage || t('signup_failed') });
-          setAlert({ type: 'error', message: signupErrorMessage || t('signup_failed') });
+          setErrors({ submit: signupError.message });
+          setAlert({ type: 'error', message: signupError.message });
           return;
         }
 
         console.log('User signed up successfully:', user);
         console.log('Attempting to insert user data:', userData);
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              user_id: user.user.id, // Ensure this is set to the authenticated user's ID
-              name: formData.name,
-              surname: formData.surname,
-              email: formData.email,
-              phone: formData.phone,
-              country: formData.country,
-              team: formData.team,
-              sector: formData.sector,
-              role: formData.role,
-              dateOfBirth: formData.dateOfBirth,
-              parentName: formData.parentName,
-              parentSurname: formData.parentSurname,
-              parentPhone: formData.parentPhone,
-              parentEmail: formData.parentEmail,
-            },
-          ]);
+        const { data, error } = await supabase
+          .from('users')
+          .insert([userData]);
 
-        if (profileError) {
-          console.error('Profile creation error:', profileError);
-          if (profileError.message.includes('new row violates row-level security policy')) {
-            setErrors({ submit: t('data_insert_failed_rls') });
-            setAlert({ type: 'error', message: t('data_insert_failed_rls') });
-          } else {
-            setErrors({ submit: t('data_insert_failed') });
-            setAlert({ type: 'error', message: `${t('data_insert_failed')}: ${profileError.message}` }); // Include error message
-          }
+        if (error) {
+          console.error('Error inserting user:', error);
+          setErrors({ submit: t('data_insert_failed') });
+          setAlert({ type: 'error', message: `${t('data_insert_failed')}: ${error.message}` });
         } else {
-          console.log('Profile created successfully:', profile);
+          console.log('User registered successfully:', data);
           setAlert({ type: 'success', message: t('registration_successful') });
-          onSubmit(formData); // Chiamata successiva se necessaria
+          onSubmit(formData);
         }
       } catch (error) {
-        console.error('Unexpected error:', error); // Log the error
+        console.error('Unexpected error:', error);
         setErrors({ submit: t('unexpected_error') });
         setAlert({ type: 'error', message: t('unexpected_error') });
-        console.error('Errore imprevisto:', error);
       }
+    } else {
+      console.log('Form validation failed', errors);
     }
   };
 
@@ -416,27 +375,6 @@ const RegistrationForm = ({ onSubmit }) => {
             <InputAdornment position="end">
               <IconButton onClick={handleClickShowPassword}>
                 {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      <TextField
-        fullWidth
-        label={t('confirm_password')}
-        type={showConfirmPassword ? 'text' : 'password'}
-        margin="normal"
-        required
-        name="confirmPassword"
-        value={formData.confirmPassword}
-        onChange={handleInputChange}
-        error={!!errors.confirmPassword}
-        helperText={errors.confirmPassword}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleClickShowConfirmPassword}>
-                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
