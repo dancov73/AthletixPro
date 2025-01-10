@@ -3,8 +3,8 @@ import { Box, Typography, TextField, Button, IconButton, InputAdornment } from '
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios'; // Import axios for HTTP requests
 import { supabase } from '../supabaseClient'; // Import supabase client
-import { authenticateUser } from '../backend/auth'; // Import the backend authentication module
 
 const Login = ({ setUser }) => {
   const { t } = useTranslation();
@@ -39,9 +39,10 @@ const Login = ({ setUser }) => {
     const { email, password } = formData;
 
     try {
-      const user = await authenticateUser(email, password);
+      const response = await axios.post('http://127.0.0.1:8000/api/login/', { email, password });
 
-      if (user) {
+      if (response.data.success) {
+        const user = response.data.user;
         console.log('Login successful:', user);
         setUser(user);
         navigate(`/profilo?type=${user.profile_type}`);

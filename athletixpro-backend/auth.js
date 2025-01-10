@@ -20,4 +20,5 @@ router.post('/login', async (req, res) => {
   }
 });
 
-module.exports = { router };
+// Ensure the module exports the router correctly
+module.exports = router;
