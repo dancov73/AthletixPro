@@ -142,7 +142,8 @@ const RegistrationForm = ({ onSubmit }) => {
         parentName: formData.parentName || null,
         parentSurname: formData.parentSurname || null,
         parentPhone: formData.parentPhone || null,
-        parentEmail: formData.parentEmail || null
+        parentEmail: formData.parentEmail || null,
+        password: formData.password // Assicurati che la password sia inclusa
       };
 
       try {

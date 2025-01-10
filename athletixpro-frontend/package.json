@@ -13,6 +13,7 @@
     "@supabase/supabase-js": "^2.47.10",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
+    "argon2-browser": "^1.19.0",
     "history": "^5.3.0",
     "i18next": "^24.2.0",
     "i18next-browser-languagedetector": "^8.0.2",

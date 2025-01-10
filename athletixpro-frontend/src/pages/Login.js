@@ -32,21 +32,39 @@ const Login = ({ setUser }) => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleLoginClick = async () => {
-    if (validateForm()) {
-      const { email, password } = formData;
-      const { data, error } = await supabase.auth.signIn({
-        email,
-        password,
-      });
+  const handleLogin = async (event) => {
+    event.preventDefault();
 
-      if (error) {
-        console.error('Errore durante il login:', error.message);
-      } else {
-        console.log('Login effettuato:', data.user);
-        setUser(data.user);
-        navigate('/dashboard');
-      }
+    const { email, password } = formData;
+
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (error) {
+      console.error('Error fetching user:', error);
+      setErrors({ ...errors, form: t('login_failed') });
+      return;
+    }
+
+    // Assume password is valid for now
+    const isPasswordValid = password === user.password;
+
+    if (isPasswordValid) {
+      console.log('Login successful:', user);
+      setUser(user);
+      navigate(`/profilo?type=${user.profile_type}`);
+    } else {
+      console.error('Invalid password');
+      setErrors({ ...errors, form: t('login_failed') });
+    }
+  };
+
+  const handleLoginClick = async (event) => {
+    if (validateForm()) {
+      await handleLogin(event);
     }
   };
 
@@ -90,6 +108,11 @@ const Login = ({ setUser }) => {
           error={!!errors.password}
           helperText={errors.password}
         />
+        {errors.form && (
+          <Typography color="error" paragraph>
+            {errors.form}
+          </Typography>
+        )}
         <Button fullWidth variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleLoginClick}>{t('login')}</Button>
         <Button fullWidth component={Link} to="/register" variant="outlined" color="secondary" sx={{ mt: 2 }}>{t('register')}</Button>
       </Box>
