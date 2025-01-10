@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient'; // Import supabase client
+import { authenticateUser } from '../backend/auth'; // Import the backend authentication module
 
 const Login = ({ setUser }) => {
   const { t } = useTranslation();
@@ -37,27 +38,19 @@ const Login = ({ setUser }) => {
 
     const { email, password } = formData;
 
-    const { data: user, error } = await supabase
-      .from('users')
-      .select('*')
-      .eq('email', email)
-      .single();
+    try {
+      const user = await authenticateUser(email, password);
 
-    if (error) {
-      console.error('Error fetching user:', error);
-      setErrors({ ...errors, form: t('login_failed') });
-      return;
-    }
-
-    // Assume password is valid for now
-    const isPasswordValid = password === user.password;
-
-    if (isPasswordValid) {
-      console.log('Login successful:', user);
-      setUser(user);
-      navigate(`/profilo?type=${user.profile_type}`);
-    } else {
-      console.error('Invalid password');
+      if (user) {
+        console.log('Login successful:', user);
+        setUser(user);
+        navigate(`/profilo?type=${user.profile_type}`);
+      } else {
+        console.error('Invalid credentials');
+        setErrors({ ...errors, form: t('login_failed') });
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
       setErrors({ ...errors, form: t('login_failed') });
     }
   };

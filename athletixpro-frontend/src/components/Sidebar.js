@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, useMediaQuery, IconButton, Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,12 @@ const Sidebar = ({ language, profileType }) => {
   const isPortrait = useMediaQuery(theme.breakpoints.down('sm'));
   const isSquare = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isSquare) {
+      setOpen(true);
+    }
+  }, [isSquare]);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
