@@ -15,7 +15,8 @@ const RegistrationForm = ({ onSubmit }) => {
     surname: '',
     email: '',
     phone: '',
-    password: '', // Removed confirmPassword
+    password: '', 
+    confirmPassword: '', // Added confirmPassword
     country: '',
     team: '',
     sector: '',
@@ -91,6 +92,9 @@ const RegistrationForm = ({ onSubmit }) => {
       tempErrors.phone = t('invalid_phone');
     }
     if (!formData.password) tempErrors.password = t('required');
+    if (formData.password !== formData.confirmPassword) {
+      tempErrors.confirmPassword = t('passwords_do_not_match');
+    }
     if (!formData.country) tempErrors.country = t('required');
     if (!formData.team) tempErrors.team = t('required');
     if (!formData.sector) tempErrors.sector = t('required');
@@ -168,12 +172,16 @@ const RegistrationForm = ({ onSubmit }) => {
         } else {
           console.log('User registered successfully:', data);
           setAlert({ type: 'success', message: t('registration_successful') });
-          onSubmit(formData);
+          if (typeof onSubmit === 'function') {
+            onSubmit(formData);
+          } else {
+            console.error('onSubmit is not a function');
+          }
         }
       } catch (error) {
         console.error('Unexpected error:', error);
         setErrors({ submit: t('unexpected_error') });
-        setAlert({ type: 'error', message: t('unexpected_error') });
+        setAlert({ type: 'error', message: `${t('unexpected_error')}: ${error.message}` });
       }
     } else {
       console.log('Form validation failed', errors);
@@ -375,6 +383,27 @@ const RegistrationForm = ({ onSubmit }) => {
             <InputAdornment position="end">
               <IconButton onClick={handleClickShowPassword}>
                 {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        fullWidth
+        label={t('confirm_password')}
+        type={showConfirmPassword ? 'text' : 'password'}
+        margin="normal"
+        required
+        name="confirmPassword"
+        value={formData.confirmPassword}
+        onChange={handleInputChange}
+        error={!!errors.confirmPassword}
+        helperText={errors.confirmPassword}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleClickShowConfirmPassword}>
+                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
