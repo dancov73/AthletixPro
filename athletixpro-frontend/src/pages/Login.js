@@ -6,6 +6,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios'; // Import axios for HTTP requests
 import { supabase } from '../supabaseClient'; // Import supabase client
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL; // URL del backend definito tramite variabili d'ambiente
+
 const Login = ({ setUser }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ const Login = ({ setUser }) => {
     const { email, password } = formData;
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login/', { email, password });
+      const response = await axios.post(`${backendUrl}/api/login/`, { email, password }); // Use backendUrl
 
       if (response.data.success) {
         const user = response.data.user;

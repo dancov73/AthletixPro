@@ -3,9 +3,18 @@ INSTALLED_APPS = [
     # ...existing code...
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
     # ...existing code...
 ]
 
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    #URL del server di siluppo React
+]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
