@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, Box, Menu, MenuItem } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom'; // Added useLocation
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +8,7 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location
 
   const handleProfileMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,9 +29,9 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
       <Toolbar>
         <Link to="/">
           <img 
-            src={require('../assets/images/logo2.jpg')} 
+            src={require('../assets/images/logo06.jpeg')} 
             alt="Logo" 
-            style={{ width: '50px', marginRight: '10px' }}
+            style={{ width: '50px', marginTop: '5px' }}
           />
         </Link>
         <Button
@@ -39,13 +40,13 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
           sx={{
             borderRadius: '5px',
             padding: '5px 15px',
-            fontSize: '1.2rem',
+            fontSize: '2rem', // Increased font size
             fontWeight: 'bold',
-            fontStyle: 'italic',
             color: '#212121',
             backgroundColor: 'inherit',
             textTransform: 'none',
             marginRight: '5px',
+            opacity: 0.8, // Added semi-transparency
             '&:hover': {
               backgroundColor: '#e65100',
             },
@@ -54,45 +55,49 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
           Athletix Pro
         </Button>
         <Box sx={{ flexGrow: 1 }} />
-        <Button
-          color="inherit"
-          component={Link}
-          to="/calendario-sociale"
-          sx={{
-            color: 'white',
-            backgroundColor: '#e65100',
-            marginRight: '5px',
-            '&:hover': {
-              backgroundColor: '#bf360c',
-            },
-          }}
-        >
-          {t('calendarioSociale')}
-        </Button>
-        <Button
-          color="inherit"
-          onClick={handleProfileMenuClick}
-          sx={{
-            color: 'white',
-            backgroundColor: '#e65100',
-            marginRight: '5px',
-            '&:hover': {
-              backgroundColor: '#bf360c',
-            },
-          }}
-        >
-          {t('profilo')}
-        </Button>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleProfileMenuClose}
-        >
-          <MenuItem onClick={() => handleProfileMenuItemClick('Admin', '/profilo?type=Admin')}>{t('admin')}</MenuItem>
-          <MenuItem onClick={() => handleProfileMenuItemClick('Coach', '/profilo?type=Coach')}>{t('coach')}</MenuItem>
-          <MenuItem onClick={() => handleProfileMenuItemClick('Athlete', '/profilo?type=Athlete')}>{t('athlete')}</MenuItem>
-          <MenuItem onClick={() => handleProfileMenuItemClick('Parent', '/profilo?type=Parent')}>{t('parent')}</MenuItem>
-        </Menu>
+        {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/register' && ( // Conditionally render buttons based on the current path
+          <>
+            <Button
+              color="inherit"
+              component={Link}
+              to="/calendario-sociale"
+              sx={{
+                color: 'white',
+                backgroundColor: '#e65100',
+                marginRight: '5px',
+                '&:hover': {
+                  backgroundColor: '#bf360c',
+                },
+              }}
+            >
+              {t('calendarioSociale')}
+            </Button>
+            <Button
+              color="inherit"
+              onClick={handleProfileMenuClick}
+              sx={{
+                color: 'white',
+                backgroundColor: '#e65100',
+                marginRight: '5px',
+                '&:hover': {
+                  backgroundColor: '#bf360c',
+                },
+              }}
+            >
+              {t('profilo')}
+            </Button>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleProfileMenuClose}
+            >
+              <MenuItem onClick={() => handleProfileMenuItemClick('Admin', '/profilo?type=Admin')}>{t('admin')}</MenuItem>
+              <MenuItem onClick={() => handleProfileMenuItemClick('Coach', '/profilo?type=Coach')}>{t('coach')}</MenuItem>
+              <MenuItem onClick={() => handleProfileMenuItemClick('Athlete', '/profilo?type=Athlete')}>{t('athlete')}</MenuItem>
+              <MenuItem onClick={() => handleProfileMenuItemClick('Parent', '/profilo?type=Parent')}>{t('parent')}</MenuItem>
+            </Menu>
+          </>
+        )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <LanguageSelector setLanguage={setLanguage} />
         </Box>

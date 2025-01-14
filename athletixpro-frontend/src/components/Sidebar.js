@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, useMediaQuery, IconButton, Box, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -11,6 +11,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import InfoIcon from '@mui/icons-material/Info';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 const Sidebar = ({ language, profileType }) => {
   const { t } = useTranslation();
@@ -18,6 +20,8 @@ const Sidebar = ({ language, profileType }) => {
   const isPortrait = useMediaQuery(theme.breakpoints.down('sm'));
   const isSquare = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const shouldHideSidebar = ['/login', '/register'].includes(location.pathname.toLowerCase());
 
   useEffect(() => {
     if (!isSquare) {
@@ -71,7 +75,16 @@ const Sidebar = ({ language, profileType }) => {
     ],
   };
 
-  const menuItems = menus[profileType] || [];
+  const genericMenu = [
+    { text: 'About', link: '/about', icon: <InfoIcon /> },
+    { text: 'Contatti', link: '/contatti', icon: <ContactMailIcon /> },
+  ];
+
+  const menuItems = profileType && location.pathname.toLowerCase() !== '/welcome' ? menus[profileType] : [];
+
+  if (shouldHideSidebar) {
+    return null;
+  }
 
   return (
     <>
@@ -98,6 +111,7 @@ const Sidebar = ({ language, profileType }) => {
         sx={{
           width: isPortrait ? '100%' : isSquare ? '48px' : 'clamp(150px, 15vw, 200px)', // Riduci la larghezza in modalità quadrato
           flexShrink: 0,
+          zIndex: 1300, // Ensure the navbar is always in the foreground
           '& .MuiDrawer-paper': {
             width: isPortrait ? '100%' : isSquare ? '48px' : 'clamp(150px, 15vw, 200px)', // Riduci la larghezza in modalità quadrato
             boxSizing: 'border-box',
@@ -109,12 +123,22 @@ const Sidebar = ({ language, profileType }) => {
             display: 'flex',
             flexDirection: isPortrait ? 'row' : 'column',
             alignItems: 'center',
+            zIndex: 1300, // Ensure the navbar is always in the foreground
+            justifyContent: 'space-between', // Align items to the top and bottom
           },
         }}
         anchor={isPortrait ? 'bottom' : 'left'}
       >
-        <List sx={{ display: 'flex', flexDirection: isPortrait ? 'row' : 'column' }}>
+        <List sx={{ display: 'flex', flexDirection: isPortrait ? 'row' : 'column', flexGrow: 1 }}>
           {menuItems.map((item, index) => (
+            <ListItem button component={Link} to={item.link} key={index}>
+              <ListItemIcon sx={{ minWidth: '36px' }}>{item.icon}</ListItemIcon> {/* Riduci lo spazio tra icona e voce */}
+              {!isSquare && !isPortrait && <ListItemText primary={t(item.text)} />}
+            </ListItem>
+          ))}
+        </List>
+        <List sx={{ display: 'flex', flexDirection: isPortrait ? 'row' : 'column', flexGrow: 1, alignItems: 'flex-start' }}>
+          {genericMenu.map((item, index) => (
             <ListItem button component={Link} to={item.link} key={index}>
               <ListItemIcon sx={{ minWidth: '36px' }}>{item.icon}</ListItemIcon> {/* Riduci lo spazio tra icona e voce */}
               {!isSquare && !isPortrait && <ListItemText primary={t(item.text)} />}
