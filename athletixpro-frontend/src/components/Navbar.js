@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Button, Box, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, Menu, MenuItem, IconButton } from '@mui/material'; // Added IconButton
+import { Menu as MenuIcon, MoreVert as MoreVertIcon } from '@mui/icons-material'; // Added icons
 import { Link, useNavigate, useLocation } from 'react-router-dom'; // Added useLocation
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +28,9 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
   return (
     <AppBar position="sticky">
       <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="menu1" sx={{ mr: 2 }}>
+          <MenuIcon />
+        </IconButton>
         <Link to="/">
           <img 
             src={require('../assets/images/logo06.jpeg')} 
@@ -116,6 +120,9 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
         >
           {t('login')}
         </Button>
+        <IconButton edge="end" color="inherit" aria-label="menu2">
+          <MoreVertIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );
