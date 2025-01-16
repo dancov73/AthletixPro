@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, Box, Menu, MenuItem, IconButton } from '@mui/material'; // Added IconButton
-import { Menu as MenuIcon, MoreVert as MoreVertIcon } from '@mui/icons-material'; // Added icons
+import { Menu as MenuIcon, MoreVert as MoreVertIcon } from '@mui/icons-material'; // Removed SportsIcon
 import { Link, useNavigate, useLocation } from 'react-router-dom'; // Added useLocation
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 const Navbar = ({ language, setLanguage, setProfileType }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [moreAnchorEl, setMoreAnchorEl] = useState(null); // Added state for more button
   const navigate = useNavigate();
   const location = useLocation(); // Get the current location
 
@@ -25,6 +26,14 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
     handleProfileMenuClose();
   };
 
+  const handleMoreMenuClick = (event) => {
+    setMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleMoreMenuClose = () => {
+    setMoreAnchorEl(null);
+  };
+
   return (
     <AppBar position="sticky">
       <Toolbar>
@@ -32,11 +41,7 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
           <MenuIcon />
         </IconButton>
         <Link to="/">
-          <img 
-            src={require('../assets/images/logo06.jpeg')} 
-            alt="Logo" 
-            style={{ width: '50px', marginTop: '5px' }}
-          />
+          {/* Removed athlete icon */}
         </Link>
         <Button
           component={Link}
@@ -53,6 +58,9 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
             opacity: 0.8, // Added semi-transparency
             '&:hover': {
               backgroundColor: '#e65100',
+            },
+            '@media (orientation: portrait)': {
+              fontSize: '1.5rem', // Smaller font size in portrait mode
             },
           }}
         >
@@ -120,9 +128,22 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
         >
           {t('login')}
         </Button>
-        <IconButton edge="end" color="inherit" aria-label="menu2">
+        <IconButton
+          edge="end"
+          color="inherit"
+          aria-label="more"
+          onClick={handleMoreMenuClick}
+        >
           <MoreVertIcon />
         </IconButton>
+        <Menu
+          anchorEl={moreAnchorEl}
+          open={Boolean(moreAnchorEl)}
+          onClose={handleMoreMenuClose}
+        >
+          <MenuItem onClick={handleMoreMenuClose}>{t('option1')}</MenuItem>
+          <MenuItem onClick={handleMoreMenuClose}>{t('option2')}</MenuItem>
+        </Menu>
       </Toolbar>
     </AppBar>
   );

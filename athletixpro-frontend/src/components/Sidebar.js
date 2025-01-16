@@ -31,18 +31,6 @@ const Sidebar = ({ language, profileType }) => {
     setOpen(!open);
   };
 
-  const handleMouseEnter = () => {
-    if (isSquare) {
-      setOpen(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (isSquare) {
-      setOpen(false);
-    }
-  };
-
   const menus = {
     Amministratore: [
       { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
@@ -81,43 +69,28 @@ const Sidebar = ({ language, profileType }) => {
 
   return (
     <>
-      {isSquare && (
-        <Box
-          sx={{
-            width: '2px',
-            height: 'calc(100vh - 74px - 10px)', // Altezza esattamente come la sidebar
-            position: 'fixed',
-            left: '5px', // Distanza di 5px dal lato sinistro
-            top: '74px',
-            zIndex: 1200,
-            backgroundColor: '#aaa', // Colore più chiaro
-            cursor: 'pointer',
-          }}
-          onMouseEnter={handleMouseEnter}
-        />
-      )}
       <Drawer
-        variant={isSquare ? 'temporary' : 'permanent'}
-        open={isSquare ? open : true}
+        variant={isSquare ? 'permanent' : 'permanent'}
+        open={true}
         onClose={handleDrawerToggle}
-        onMouseLeave={handleMouseLeave}
         sx={{
-          width: isPortrait ? '100%' : isSquare ? '48px' : 'clamp(150px, 15vw, 200px)', // Riduci la larghezza in modalità quadrato
+          width: isPortrait ? '100%' : isSquare ? '48px' : 'clamp(150px, 15vw, 200px)',
           flexShrink: 0,
-          zIndex: 1300, // Ensure the navbar is always in the foreground
+          zIndex: isSquare ? 1200 : 1300,
           '& .MuiDrawer-paper': {
-            width: isPortrait ? '100%' : isSquare ? '48px' : 'clamp(150px, 15vw, 200px)', // Riduci la larghezza in modalità quadrato
+            width: isPortrait ? '100%' : isSquare ? '48px' : 'clamp(150px, 15vw, 200px)',
             boxSizing: 'border-box',
             marginTop: isPortrait ? 0 : '10px',
             height: isPortrait ? 'auto' : 'calc(100vh - 74px - 10px)',
-            position: isPortrait ? 'fixed' : 'relative',
-            top: isPortrait ? 'auto' : '74px',
+            position: isPortrait ? 'fixed' : isSquare ? 'fixed' : 'fixed', // Fix position in landscape mode
+            top: isPortrait ? 'auto' : isSquare ? '74px' : '74px',
             bottom: isPortrait ? 0 : 'auto',
             display: 'flex',
             flexDirection: isPortrait ? 'row' : 'column',
             alignItems: 'center',
-            zIndex: 1300, // Ensure the navbar is always in the foreground
-            justifyContent: 'space-between', // Align items to the top and bottom
+            zIndex: 1300,
+            justifyContent: 'space-between',
+            left: 0, // Ensure the sidebar is fixed to the left
           },
         }}
         anchor={isPortrait ? 'bottom' : 'left'}
