@@ -3,10 +3,8 @@ import { Box, Typography, TextField, Button, IconButton, InputAdornment } from '
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios'; // Import axios for HTTP requests
-import { supabase } from '../supabaseClient'; // Import supabase client
-
-const backendUrl = process.env.REACT_APP_BACKEND_URL; // URL del backend definito tramite variabili d'ambiente
+import PropTypes from 'prop-types'; // Import PropTypes for prop validation
+import supabase from '../supabaseClient'; // Updated import path
 
 const Login = ({ setUser }) => {
   const { t } = useTranslation();
@@ -40,21 +38,20 @@ const Login = ({ setUser }) => {
 
     const { email, password } = formData;
 
-    try {
-      const response = await axios.post(`${backendUrl}/api/login/`, { email, password }); // Use backendUrl
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (response.data.success) {
-        const user = response.data.user;
-        console.log('Login successful:', user);
-        setUser(user);
-        navigate(`/profilo?type=${user.profile_type}`);
-      } else {
-        console.error('Invalid credentials');
-        setErrors({ ...errors, form: t('login_failed') });
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
+    if (error) {
+      console.error('Login error:', error.message);
       setErrors({ ...errors, form: t('login_failed') });
+    } else if (!data.user) {
+      setErrors({ ...errors, form: t('invalid_credentials') });
+    } else {
+      console.log('Login successful:', data.user);
+      setUser(data.user);
+      navigate(`/profilo?type=${data.user.user_metadata.profile_type}`);
     }
   };
 
@@ -114,6 +111,10 @@ const Login = ({ setUser }) => {
       </Box>
     </Box>
   );
+};
+
+Login.propTypes = {
+  setUser: PropTypes.func.isRequired,
 };
 
 export default Login;
