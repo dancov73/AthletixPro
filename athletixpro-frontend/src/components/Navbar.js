@@ -111,7 +111,7 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
           </>
         )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <LanguageSelector setLanguage={setLanguage} />
+          <LanguageSelector setLanguage={setLanguage} sx={{ border: 'none' }} /> {/* Removed border */}
         </Box>
         <Button
           color="inherit"

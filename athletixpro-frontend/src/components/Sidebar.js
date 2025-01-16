@@ -19,7 +19,7 @@ const Sidebar = ({ language, profileType }) => {
   const isSquare = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const shouldHideSidebar = ['/login', '/register'].includes(location.pathname.toLowerCase());
+  const shouldHideSidebar = ['/login', '/register', '/'].includes(location.pathname.toLowerCase());
 
   useEffect(() => {
     if (!isSquare) {
