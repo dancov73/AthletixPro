@@ -3,7 +3,7 @@ import { Box, TextField, Button, MenuItem, IconButton, InputAdornment, Alert } f
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import countries from '../data/countries';
-import supabaseClient from '../supabaseClient'; // Updated import path
+import supabase from '../supabaseClient'; // Add this import statement
 
 const RegistrationForm = ({ onSubmit }) => {
   const { t } = useTranslation();

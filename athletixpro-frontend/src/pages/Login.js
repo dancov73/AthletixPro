@@ -44,20 +44,40 @@ const Login = ({ setUser }) => {
     });
 
     if (error) {
-      console.error('Login error:', error.message);
-      setErrors({ ...errors, form: t('login_failed') });
+      if (error.message.includes('invalid email')) {
+        setErrors({ ...errors, form: t('invalid_email') });
+      } else if (error.message.includes('invalid password')) {
+        setErrors({ ...errors, form: t('invalid_password') });
+      } else {
+        setErrors({ ...errors, form: t('login_failed') });
+      }
     } else if (!data.user) {
       setErrors({ ...errors, form: t('invalid_credentials') });
     } else {
       console.log('Login successful:', data.user);
       setUser(data.user);
-      navigate(`/profilo?type=${data.user.user_metadata.profile_type}`);
+      const profileType = data.user.user_metadata.profile_type;
+      navigate(`/home?type=${profileType}`);
+    }
+  };
+
+  const fetchSupabaseLogs = async () => {
+    const { data, error } = await supabase
+      .from('edge_logs')
+      .select('cast(timestamp as datetime) as timestamp, event_message, metadata')
+      .limit(5);
+
+    if (error) {
+      console.error('Error fetching logs:', error);
+    } else {
+      console.log('Supabase logs:', data);
     }
   };
 
   const handleLoginClick = async (event) => {
     if (validateForm()) {
       await handleLogin(event);
+      await fetchSupabaseLogs(); // Fetch logs after login attempt
     }
   };
 
