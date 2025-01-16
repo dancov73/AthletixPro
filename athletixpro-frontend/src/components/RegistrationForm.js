@@ -143,7 +143,7 @@ const RegistrationForm = ({ onSubmit }) => {
         parentSurname: formData.parentSurname || null,
         parentPhone: formData.parentPhone || null,
         parentEmail: formData.parentEmail || null,
-        password: formData.password // Assicurati che la password sia inclusa
+        password: formData.password // Ensure password is included
       };
 
       try {
@@ -168,11 +168,11 @@ const RegistrationForm = ({ onSubmit }) => {
 
         if (error) {
           console.error('Error inserting user:', error);
-          setErrors({ submit: t('data_insert_failed') });
-          setAlert({ type: 'error', message: `${t('data_insert_failed')}: ${error.message}` });
+          setErrors({ submit: t('data_insert_failed', { lng: 'en' }) });
+          setAlert({ type: 'error', message: `${t('data_insert_failed', { lng: 'en' })}: ${error.message}` });
         } else {
           console.log('User registered successfully:', data);
-          setAlert({ type: 'success', message: t('registration_successful') });
+          setAlert({ type: 'success', message: t('registration_successful', { lng: 'en' }) });
           if (typeof onSubmit === 'function') {
             onSubmit(formData);
           } else {
@@ -181,8 +181,8 @@ const RegistrationForm = ({ onSubmit }) => {
         }
       } catch (error) {
         console.error('Unexpected error:', error);
-        setErrors({ submit: t('unexpected_error') });
-        setAlert({ type: 'error', message: `${t('unexpected_error')}: ${error.message}` });
+        setErrors({ submit: t('unexpected_error', { lng: 'en' }) });
+        setAlert({ type: 'error', message: `${t('unexpected_error', { lng: 'en' })}: ${error.message}` });
       }
     } else {
       console.log('Form validation failed', errors);
@@ -303,10 +303,10 @@ const RegistrationForm = ({ onSubmit }) => {
         error={!!errors.role}
         helperText={errors.role}
       >
-        <MenuItem value="atleta">{t('athlete')}</MenuItem>
-        <MenuItem value="allenatore">{t('coach')}</MenuItem>
-        <MenuItem value="coordinatore">{t('coordinator')}</MenuItem>
-        <MenuItem value="dirigente">{t('manager')}</MenuItem>
+        <MenuItem value="admin">{t('admin')}</MenuItem>
+        <MenuItem value="coach">{t('coach')}</MenuItem>
+        <MenuItem value="athlete">{t('athlete')}</MenuItem>
+        <MenuItem value="parent">{t('parent')}</MenuItem>
       </TextField>
       <TextField
         fullWidth
