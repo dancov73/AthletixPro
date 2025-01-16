@@ -11,8 +11,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import InfoIcon from '@mui/icons-material/Info';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 const Sidebar = ({ language, profileType }) => {
   const { t } = useTranslation();
@@ -75,11 +73,6 @@ const Sidebar = ({ language, profileType }) => {
     ],
   };
 
-  const genericMenu = [
-    { text: 'About', link: '/about', icon: <InfoIcon /> },
-    { text: 'Contatti', link: '/contatti', icon: <ContactMailIcon /> },
-  ];
-
   const menuItems = profileType && location.pathname.toLowerCase() !== '/welcome' ? menus[profileType] : [];
 
   if (shouldHideSidebar) {
@@ -131,14 +124,6 @@ const Sidebar = ({ language, profileType }) => {
       >
         <List sx={{ display: 'flex', flexDirection: isPortrait ? 'row' : 'column', flexGrow: 1 }}>
           {menuItems.map((item, index) => (
-            <ListItem button component={Link} to={item.link} key={index}>
-              <ListItemIcon sx={{ minWidth: '36px' }}>{item.icon}</ListItemIcon> {/* Riduci lo spazio tra icona e voce */}
-              {!isSquare && !isPortrait && <ListItemText primary={t(item.text)} />}
-            </ListItem>
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: isPortrait ? 'row' : 'column', flexGrow: 1, alignItems: 'flex-start' }}>
-          {genericMenu.map((item, index) => (
             <ListItem button component={Link} to={item.link} key={index}>
               <ListItemIcon sx={{ minWidth: '36px' }}>{item.icon}</ListItemIcon> {/* Riduci lo spazio tra icona e voce */}
               {!isSquare && !isPortrait && <ListItemText primary={t(item.text)} />}
