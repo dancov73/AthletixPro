@@ -33,31 +33,31 @@ const Sidebar = ({ language, profileType }) => {
 
   const menus = {
     Admin: [
-      { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'Gestione Utenti', link: '/gestione-utenti', icon: <PeopleIcon /> },
-      { text: 'Report', link: '/report', icon: <ReportIcon /> },
-      { text: 'Calendario', link: '/calendario', icon: <CalendarTodayIcon /> },
-      { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
+      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
+      { text: 'user_management', link: '/gestione-utenti', icon: <PeopleIcon /> },
+      { text: 'report', link: '/report', icon: <ReportIcon /> },
+      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
+      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
     ],
     Coach: [
-      { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'Pianificazione Allenamenti', link: '/pianificazione-allenamenti', icon: <DirectionsRunIcon /> },
-      { text: 'Monitoraggio Atleti', link: '/monitoraggio-atleti', icon: <TrendingUpIcon /> },
-      { text: 'Calendario', link: '/calendario', icon: <CalendarTodayIcon /> },
-      { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
+      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
+      { text: 'training_planning', link: '/pianificazione-allenamenti', icon: <DirectionsRunIcon /> },
+      { text: 'athlete_monitoring', link: '/monitoraggio-atleti', icon: <TrendingUpIcon /> },
+      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
+      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
     ],
     Athlete: [
-      { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'I miei Allenamenti', link: '/i-miei-allenamenti', icon: <DirectionsRunIcon /> },
-      { text: 'Statistiche', link: '/statistiche', icon: <TrendingUpIcon /> },
-      { text: 'Calendario', link: '/calendario', icon: <CalendarTodayIcon /> },
-      { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
+      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
+      { text: 'my_trainings', link: '/i-miei-allenamenti', icon: <DirectionsRunIcon /> },
+      { text: 'statistics', link: '/statistiche', icon: <TrendingUpIcon /> },
+      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
+      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
     ],
     Parent: [
-      { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'Progressi Figlio', link: '/progressi-figlio', icon: <TrendingUpIcon /> },
-      { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
-      { text: 'Calendario', link: '/calendario', icon: <CalendarTodayIcon /> },
+      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
+      { text: 'child_progress', link: '/progressi-figlio', icon: <TrendingUpIcon /> },
+      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
+      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
     ],
   };
 
@@ -99,7 +99,7 @@ const Sidebar = ({ language, profileType }) => {
           {menuItems.map((item, index) => (
             <ListItem button component={Link} to={item.link} key={index}>
               <ListItemIcon sx={{ minWidth: '36px' }}>{item.icon}</ListItemIcon> {/* Riduci lo spazio tra icona e voce */}
-              {!isSquare && !isPortrait && <ListItemText primary={t(item.text)} />}
+              {!isSquare && !isPortrait && <ListItemText primary={t(`sidebar.${item.text}`)} />}
             </ListItem>
           ))}
         </List>

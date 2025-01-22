@@ -1,15 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import CoachHomepage from './coach/Homepage'; // Updated import
 
 const CoachProfile = () => {
-  return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Profilo Allenatore
-      </Typography>
-      {/* Add content for the coach profile homepage */}
-    </Box>
-  );
+    return <CoachHomepage />; // Updated component
 };
 
 export default CoachProfile;

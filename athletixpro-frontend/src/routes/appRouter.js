@@ -4,10 +4,10 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Dashboard from '../pages/Dashboard';
-import AdminProfile from '../pages/AdminProfile';
-import AthleteProfile from '../pages/AthleteProfile';
-import CoachProfile from '../pages/CoachProfile';
-import ParentProfile from '../pages/ParentProfile';
+import AdminProfile from '../pages/admin/Profile'; // Updated import path
+import AthleteProfile from '../pages/athlete/Profile'; // Updated import path
+import CoachProfile from '../pages/coach/Profile'; // Updated import path
+import ParentProfile from '../pages/parent/Profile'; // Updated import path
 
 const AppRouter = () => (
   <Routes>

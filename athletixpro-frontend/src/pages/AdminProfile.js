@@ -1,15 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import AdminHomepage from './admin/Homepage'; // Updated import
 
 const AdminProfile = () => {
-  return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Profilo Amministratore
-      </Typography>
-      {/* Add content for the admin profile homepage */}
-    </Box>
-  );
+    return <AdminHomepage />; // Updated component
 };
 
 export default AdminProfile;

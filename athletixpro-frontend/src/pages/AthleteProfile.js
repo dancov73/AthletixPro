@@ -1,15 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import AthleteHomepage from './athlete/Homepage'; // Updated import
 
 const AthleteProfile = () => {
-  return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Profilo Atleta
-      </Typography>
-      {/* Add content for the athlete profile homepage */}
-    </Box>
-  );
+    return <AthleteHomepage />; // Updated component
 };
 
 export default AthleteProfile;

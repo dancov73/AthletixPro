@@ -1,15 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import ParentHomepage from './parent/Homepage'; // Updated import
 
 const ParentProfile = () => {
-  return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Profilo Genitore
-      </Typography>
-      {/* Add content for the parent profile homepage */}
-    </Box>
-  );
+    return <ParentHomepage />; // Updated component
 };
 
 export default ParentProfile;

@@ -56,8 +56,40 @@ const Login = ({ setUser }) => {
     } else {
       console.log('Login successful:', data.user);
       setUser(data.user);
-      const profileType = data.user.user_metadata.profile_type;
-      navigate(`/home?type=${profileType}`);
+
+      // Fetch user role from Supabase
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('role')
+        .eq('email', email)
+        .single();
+
+      if (userError) {
+        console.error('Error fetching user role:', userError);
+        setErrors({ ...errors, form: t('login_failed') });
+      } else {
+        const profileType = userData.role.toLowerCase();
+        let dashboardPath = '';
+
+        switch (profileType) {
+          case 'admin':
+            dashboardPath = '/admin/dashboard';
+            break;
+          case 'athlete':
+            dashboardPath = '/athlete/dashboard';
+            break;
+          case 'coach':
+            dashboardPath = '/coach/dashboard';
+            break;
+          case 'parent':
+            dashboardPath = '/parent/dashboard';
+            break;
+          default:
+            dashboardPath = '/';
+        }
+
+        navigate(dashboardPath); // Updated navigation path
+      }
     }
   };
 
