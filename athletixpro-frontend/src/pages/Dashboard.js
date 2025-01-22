@@ -2,7 +2,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import AthletePerformanceGraph from '../components/Dashboard/AthletePerformanceGraph';
-import StatsCard from '../components/Dashboard/StatsCard';
+import StatsCard from '../components/Dashboard/StatsCard'; // Update import statement
 
 const Dashboard = () => {
   const data = [

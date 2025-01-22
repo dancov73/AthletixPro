@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Atleti from './pages/Atleti';
-import Allenamenti from './pages/Allenamenti';
+import Allenamenti from './pages/Allenamenti'; // Update import statement
 import Home from './pages/Home';
 import Profilo from './pages/Profilo';
 import { GlobalStyles } from './styles/global.css';
