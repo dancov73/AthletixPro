@@ -7,6 +7,7 @@ const ParentProfile = () => {
       <Typography variant="h4" gutterBottom>
         Profilo Genitore
       </Typography>
+      {/* Add content for the parent profile homepage */}
     </Box>
   );
 };

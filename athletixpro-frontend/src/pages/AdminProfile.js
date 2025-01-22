@@ -7,6 +7,7 @@ const AdminProfile = () => {
       <Typography variant="h4" gutterBottom>
         Profilo Amministratore
       </Typography>
+      {/* Add content for the admin profile homepage */}
     </Box>
   );
 };

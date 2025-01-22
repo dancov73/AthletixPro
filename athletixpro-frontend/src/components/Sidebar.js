@@ -32,28 +32,28 @@ const Sidebar = ({ language, profileType }) => {
   };
 
   const menus = {
-    Amministratore: [
+    Admin: [
       { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
       { text: 'Gestione Utenti', link: '/gestione-utenti', icon: <PeopleIcon /> },
       { text: 'Report', link: '/report', icon: <ReportIcon /> },
       { text: 'Calendario', link: '/calendario', icon: <CalendarTodayIcon /> },
       { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
     ],
-    Allenatore: [
+    Coach: [
       { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
       { text: 'Pianificazione Allenamenti', link: '/pianificazione-allenamenti', icon: <DirectionsRunIcon /> },
       { text: 'Monitoraggio Atleti', link: '/monitoraggio-atleti', icon: <TrendingUpIcon /> },
       { text: 'Calendario', link: '/calendario', icon: <CalendarTodayIcon /> },
       { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
     ],
-    Atleta: [
+    Athlete: [
       { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
       { text: 'I miei Allenamenti', link: '/i-miei-allenamenti', icon: <DirectionsRunIcon /> },
       { text: 'Statistiche', link: '/statistiche', icon: <TrendingUpIcon /> },
       { text: 'Calendario', link: '/calendario', icon: <CalendarTodayIcon /> },
       { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
     ],
-    Genitore: [
+    Parent: [
       { text: 'Dashboard', link: '/dashboard', icon: <DashboardIcon /> },
       { text: 'Progressi Figlio', link: '/progressi-figlio', icon: <TrendingUpIcon /> },
       { text: 'Comunicazioni', link: '/comunicazioni', icon: <MailIcon /> },
@@ -61,9 +61,9 @@ const Sidebar = ({ language, profileType }) => {
     ],
   };
 
-  const menuItems = profileType && location.pathname.toLowerCase() !== '/welcome' ? menus[profileType] : [];
+  const menuItems = profileType && menus[profileType] ? menus[profileType] : [];
 
-  if (shouldHideSidebar) {
+  if (shouldHideSidebar || !menuItems.length) {
     return null;
   }
 

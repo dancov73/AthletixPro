@@ -7,6 +7,7 @@ const CoachProfile = () => {
       <Typography variant="h4" gutterBottom>
         Profilo Allenatore
       </Typography>
+      {/* Add content for the coach profile homepage */}
     </Box>
   );
 };

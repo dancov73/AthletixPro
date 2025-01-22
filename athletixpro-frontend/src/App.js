@@ -64,10 +64,10 @@ function App() {
                     <Route path="/profilo" element={<Profilo />} />
                     <Route path="/login" element={<Login setUser={setUser} />} /> {/* Add Login route */}
                     <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
-                    <Route path="/profilo/amministratore" element={<AdminProfile />} />
-                    <Route path="/profilo/allenatore" element={<CoachProfile />} />
-                    <Route path="/profilo/atleta" element={<AthleteProfile />} />
-                    <Route path="/profilo/genitore" element={<ParentProfile />} />
+                    <Route path="/admin-profile" element={<AdminProfile />} />
+                    <Route path="/coach-profile" element={<CoachProfile />} />
+                    <Route path="/athlete-profile" element={<AthleteProfile />} />
+                    <Route path="/parent-profile" element={<ParentProfile />} />
                     <Route path="/calendario-sociale" element={<SocialCalendar />} /> {/* Add SocialCalendar route */}
                   </Routes>
                 </Container>

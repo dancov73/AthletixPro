@@ -7,6 +7,7 @@ const AthleteProfile = () => {
       <Typography variant="h4" gutterBottom>
         Profilo Atleta
       </Typography>
+      {/* Add content for the athlete profile homepage */}
     </Box>
   );
 };

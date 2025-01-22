@@ -20,10 +20,25 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
     setAnchorEl(null);
   };
 
-  const handleProfileMenuItemClick = (profileType, path) => {
+  const handleProfileMenuItemClick = (profileType) => {
     setProfileType(profileType);
-    navigate(path);
     handleProfileMenuClose();
+    switch (profileType) {
+      case 'Admin':
+        navigate('/admin-profile');
+        break;
+      case 'Coach':
+        navigate('/coach-profile');
+        break;
+      case 'Athlete':
+        navigate('/athlete-profile');
+        break;
+      case 'Parent':
+        navigate('/parent-profile');
+        break;
+      default:
+        break;
+    }
   };
 
   const handleMoreMenuClick = (event) => {
@@ -103,10 +118,10 @@ const Navbar = ({ language, setLanguage, setProfileType }) => {
               open={Boolean(anchorEl)}
               onClose={handleProfileMenuClose}
             >
-              <MenuItem onClick={() => handleProfileMenuItemClick('Admin', '/profilo?type=Admin')}>{t('admin')}</MenuItem>
-              <MenuItem onClick={() => handleProfileMenuItemClick('Coach', '/profilo?type=Coach')}>{t('coach')}</MenuItem>
-              <MenuItem onClick={() => handleProfileMenuItemClick('Athlete', '/profilo?type=Athlete')}>{t('athlete')}</MenuItem>
-              <MenuItem onClick={() => handleProfileMenuItemClick('Parent', '/profilo?type=Parent')}>{t('parent')}</MenuItem>
+              <MenuItem onClick={() => handleProfileMenuItemClick('Admin')}>{t('admin')}</MenuItem>
+              <MenuItem onClick={() => handleProfileMenuItemClick('Coach')}>{t('coach')}</MenuItem>
+              <MenuItem onClick={() => handleProfileMenuItemClick('Athlete')}>{t('athlete')}</MenuItem>
+              <MenuItem onClick={() => handleProfileMenuItemClick('Parent')}>{t('parent')}</MenuItem>
             </Menu>
           </>
         )}
