@@ -6,8 +6,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction'; // Per interazioni aggiuntive
 import { useTranslation } from 'react-i18next';
+import Sidebar from '../components/Sidebar'; // Import Sidebar
 
-const Home = () => {
+const Home = ({ profileType }) => {
   const { t, i18n } = useTranslation();
 
   const customDayHeaderContent = (args) => {
@@ -16,14 +17,17 @@ const Home = () => {
   };
 
   return (
-    <Box>
-      <FullCalendar 
-        plugins={[dayGridPlugin, listPlugin, interactionPlugin]} 
-        initialView="dayGridMonth" 
-        firstDay={1} // Set the first day of the week to Monday
-        locale={i18n.language} // Set the locale based on the selected language
-        dayHeaderContent={customDayHeaderContent} // Use custom day header content
-      />
+    <Box sx={{ display: 'flex' }}>
+      <Sidebar profileType={profileType} /> {/* Pass profileType to Sidebar */}
+      <Box sx={{ flexGrow: 1 }}>
+        <FullCalendar 
+          plugins={[dayGridPlugin, listPlugin, interactionPlugin]} 
+          initialView="dayGridMonth" 
+          firstDay={1} // Set the first day of the week to Monday
+          locale={i18n.language} // Set the locale based on the selected language
+          dayHeaderContent={customDayHeaderContent} // Use custom day header content
+        />
+      </Box>
     </Box>
   );
 };

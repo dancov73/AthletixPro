@@ -31,34 +31,35 @@ const Sidebar = ({ language, profileType }) => {
     setOpen(!open);
   };
 
+  const adminMenu = [
+    { text: 'dashboard', link: '/admin/dashboard', icon: <DashboardIcon /> },
+    { text: 'users', link: '/admin/users', icon: <PeopleIcon /> },
+    { text: 'reports', link: '/admin/reports', icon: <ReportIcon /> },
+  ];
+
+  const athleteMenu = [
+    { text: 'dashboard', link: '/athlete/dashboard', icon: <DashboardIcon /> },
+    { text: 'calendar', link: '/athlete/calendar', icon: <CalendarTodayIcon /> },
+    { text: 'performance', link: '/athlete/performance', icon: <TrendingUpIcon /> },
+  ];
+
+  const coachMenu = [
+    { text: 'dashboard', link: '/coach/dashboard', icon: <DashboardIcon /> },
+    { text: 'athletes', link: '/coach/athletes', icon: <DirectionsRunIcon /> },
+    { text: 'messages', link: '/coach/messages', icon: <MailIcon /> },
+  ];
+
+  const parentMenu = [
+    { text: 'dashboard', link: '/parent/dashboard', icon: <DashboardIcon /> },
+    { text: 'calendar', link: '/parent/calendar', icon: <CalendarTodayIcon /> },
+    { text: 'messages', link: '/parent/messages', icon: <MailIcon /> },
+  ];
+
   const menus = {
-    Admin: [
-      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'user_management', link: '/gestione-utenti', icon: <PeopleIcon /> },
-      { text: 'report', link: '/report', icon: <ReportIcon /> },
-      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
-      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
-    ],
-    Coach: [
-      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'training_planning', link: '/pianificazione-allenamenti', icon: <DirectionsRunIcon /> },
-      { text: 'athlete_monitoring', link: '/monitoraggio-atleti', icon: <TrendingUpIcon /> },
-      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
-      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
-    ],
-    Athlete: [
-      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'my_trainings', link: '/i-miei-allenamenti', icon: <DirectionsRunIcon /> },
-      { text: 'statistics', link: '/statistiche', icon: <TrendingUpIcon /> },
-      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
-      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
-    ],
-    Parent: [
-      { text: 'dashboard', link: '/dashboard', icon: <DashboardIcon /> },
-      { text: 'child_progress', link: '/progressi-figlio', icon: <TrendingUpIcon /> },
-      { text: 'communications', link: '/comunicazioni', icon: <MailIcon /> },
-      { text: 'calendar', link: '/calendario', icon: <CalendarTodayIcon /> },
-    ],
+    admin: adminMenu,
+    athlete: athleteMenu,
+    coach: coachMenu,
+    parent: parentMenu,
   };
 
   const menuItems = profileType && menus[profileType] ? menus[profileType] : [];

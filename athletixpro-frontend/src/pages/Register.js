@@ -46,7 +46,7 @@ const Register = () => {
 
       if (response.data.success) {
         console.log('Registration successful:', response.data.user);
-        navigate('/login');
+        navigate('/login'); // Navigate to login page after successful registration
       } else {
         console.error('Registration failed');
         setErrors({ ...errors, form: t('registration_failed') });

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GestioneUtenti = () => {
+const UserManagement = () => {
   return (
     <div>
       <h1>User Management</h1>
@@ -9,4 +9,4 @@ const GestioneUtenti = () => {
   );
 };
 
-export default GestioneUtenti;
+export default UserManagement;

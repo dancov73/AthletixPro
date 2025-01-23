@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Atleti from './pages/Atleti';
-import Allenamenti from './pages/Allenamenti'; // Update import statement
+import Allenamenti from './pages/Allenamenti';
 import Home from './pages/Home';
 import Profilo from './pages/Profilo';
 import { GlobalStyles } from './styles/global.css';
@@ -16,13 +16,13 @@ import { useTranslation } from 'react-i18next';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/i18n';
 import Welcome from './pages/Welcome';
-import Login from './pages/Login'; // Import the Login component
-import AdminDashboard from './pages/admin/Dashboard'; // Update import statement
-import CoachDashboard from './pages/coach/Dashboard'; // Update import statement
-import AthleteDashboard from './pages/athlete/Dashboard'; // Update import statement
-import ParentDashboard from './pages/parent/Dashboard'; // Update import statement
-import SocialCalendar from './pages/SocialCalendar'; // Import the SocialCalendar component
-import RegistrationForm from './components/RegistrationForm'; // Import the RegistrationForm component
+import Login from './pages/Login';
+import SocialCalendar from './pages/SocialCalendar';
+import RegistrationForm from './components/RegistrationForm';
+import AdminDashboard from './pages/admin/Dashboard';
+import AthleteDashboard from './pages/athlete/Dashboard';
+import CoachDashboard from './pages/coach/Dashboard';
+import ParentDashboard from './pages/parent/Dashboard';
 
 const theme = createTheme({
   palette: {
@@ -41,7 +41,7 @@ const theme = createTheme({
 function App() {
   const [language, setLanguage] = useState('en');
   const [user, setUser] = useState(null); // Add user state
-  const [profileType, setProfileType] = useState('Atleta'); // Add profileType state
+  const [profileType, setProfileType] = useState(''); // Initialize profileType state
   const { t } = useTranslation();
 
   return (
@@ -57,18 +57,18 @@ function App() {
                 <Container sx={{ mt: { xs: 8, md: 0 }, flexGrow: 1, overflowX: 'hidden' }}> {/* Rimuovi maxWidth */}
                   <Routes>
                     <Route path="/" element={<Welcome />} />
-                    <Route path="/home" element={<Home />} />
+                    <Route path="/home" element={<Home profileType={profileType} />} /> {/* Pass profileType to Home */}
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/atleti" element={<Atleti />} />
                     <Route path="/allenamenti" element={<Allenamenti />} />
                     <Route path="/profilo" element={<Profilo />} />
-                    <Route path="/login" element={<Login setUser={setUser} />} /> {/* Add Login route */}
+                    <Route path="/login" element={<Login setUser={setUser} setProfileType={setProfileType} />} /> {/* Pass setProfileType to Login */}
                     <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
-                    <Route path="/admin-profile" element={<AdminDashboard />} /> {/* Update route */}
-                    <Route path="/coach-profile" element={<CoachDashboard />} /> {/* Update route */}
-                    <Route path="/athlete-profile" element={<AthleteDashboard />} /> {/* Update route */}
-                    <Route path="/parent-profile" element={<ParentDashboard />} /> {/* Update route */}
                     <Route path="/calendario-sociale" element={<SocialCalendar />} /> {/* Add SocialCalendar route */}
+                    <Route path="/admin/dashboard" element={<AdminDashboard />} /> {/* Add AdminDashboard route */}
+                    <Route path="/athlete/dashboard" element={<AthleteDashboard />} /> {/* Add AthleteDashboard route */}
+                    <Route path="/coach/dashboard" element={<CoachDashboard />} /> {/* Add CoachDashboard route */}
+                    <Route path="/parent/dashboard" element={<ParentDashboard />} /> {/* Add ParentDashboard route */}
                   </Routes>
                 </Container>
               </Box>

@@ -6,7 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types'; // Import PropTypes for prop validation
 import supabase from '../supabaseClient'; // Updated import path
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, setProfileType }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -69,26 +69,8 @@ const Login = ({ setUser }) => {
         setErrors({ ...errors, form: t('login_failed') });
       } else {
         const profileType = userData.role.toLowerCase();
-        let dashboardPath = '';
-
-        switch (profileType) {
-          case 'admin':
-            dashboardPath = '/admin/dashboard';
-            break;
-          case 'athlete':
-            dashboardPath = '/athlete/dashboard';
-            break;
-          case 'coach':
-            dashboardPath = '/coach/dashboard';
-            break;
-          case 'parent':
-            dashboardPath = '/parent/dashboard';
-            break;
-          default:
-            dashboardPath = '/';
-        }
-
-        navigate(dashboardPath); // Updated navigation path
+        setProfileType(profileType); // Set profile type
+        navigate('/home'); // Navigate to the home page
       }
     }
   };
@@ -167,6 +149,7 @@ const Login = ({ setUser }) => {
 
 Login.propTypes = {
   setUser: PropTypes.func.isRequired,
+  setProfileType: PropTypes.func.isRequired, // Add prop type validation for setProfileType
 };
 
 export default Login;
