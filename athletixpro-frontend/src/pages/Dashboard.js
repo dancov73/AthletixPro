@@ -13,7 +13,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box sx={{ p: 3 }}>
       <Typography variant="h4">Dashboard</Typography>
       <StatsCard title="Atleti" value={5} />
       <AthletePerformanceGraph data={data} />

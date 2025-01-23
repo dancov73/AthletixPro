@@ -6,10 +6,10 @@ import { createTheme } from '@mui/material/styles';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
-import Atleti from './pages/Atleti';
-import Allenamenti from './pages/Allenamenti';
+import Athlete from './pages/Athlete';
+import Training from './pages/Training';
 import Home from './pages/Home';
-import Profilo from './pages/Profilo';
+import Calendar from './pages/Calendar';
 import { GlobalStyles } from './styles/global.css';
 import LanguageSelector from './components/LanguageSelector';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +23,9 @@ import AdminDashboard from './pages/admin/Dashboard';
 import AthleteDashboard from './pages/athlete/Dashboard';
 import CoachDashboard from './pages/coach/Dashboard';
 import ParentDashboard from './pages/parent/Dashboard';
+// Add new imports here
+import NewPage1 from './pages/NewPage1';
+import NewPage2 from './pages/NewPage2';
 
 const theme = createTheme({
   palette: {
@@ -59,9 +62,9 @@ function App() {
                     <Route path="/" element={<Welcome />} />
                     <Route path="/home" element={<Home profileType={profileType} />} /> {/* Pass profileType to Home */}
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/atleti" element={<Atleti />} />
-                    <Route path="/allenamenti" element={<Allenamenti />} />
-                    <Route path="/profilo" element={<Profilo />} />
+                    <Route path="/atleti" element={<Athlete />} />
+                    <Route path="/training" element={<Training />} />
+                    <Route path="/calendar" element={<Calendar />} />
                     <Route path="/login" element={<Login setUser={setUser} setProfileType={setProfileType} />} /> {/* Pass setProfileType to Login */}
                     <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
                     <Route path="/calendario-sociale" element={<SocialCalendar />} /> {/* Add SocialCalendar route */}
@@ -69,6 +72,9 @@ function App() {
                     <Route path="/athlete/dashboard" element={<AthleteDashboard />} /> {/* Add AthleteDashboard route */}
                     <Route path="/coach/dashboard" element={<CoachDashboard />} /> {/* Add CoachDashboard route */}
                     <Route path="/parent/dashboard" element={<ParentDashboard />} /> {/* Add ParentDashboard route */}
+                    {/* Add new routes here */}
+                    <Route path="/newpage1" element={<NewPage1 />} />
+                    <Route path="/newpage2" element={<NewPage2 />} />
                   </Routes>
                 </Container>
               </Box>
