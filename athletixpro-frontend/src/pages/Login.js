@@ -70,7 +70,24 @@ const Login = ({ setUser, setProfileType }) => {
       } else {
         const profileType = userData.role.toLowerCase();
         setProfileType(profileType); // Set profile type
-        navigate('/home'); // Navigate to the home page
+
+        // Navigate to the appropriate dashboard based on profile type
+        switch (profileType) {
+          case 'admin':
+            navigate('/admin/dashboard');
+            break;
+          case 'athlete':
+            navigate('/athlete/dashboard');
+            break;
+          case 'coach':
+            navigate('/coach/dashboard');
+            break;
+          case 'parent':
+            navigate('/parent/dashboard');
+            break;
+          default:
+            navigate('/home'); // Fallback to home if profile type is unknown
+        }
       }
     }
   };

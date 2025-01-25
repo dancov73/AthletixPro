@@ -5,10 +5,6 @@ import { AuthProvider } from './context/authContext';
 import { createTheme } from '@mui/material/styles';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import Dashboard from './pages/Dashboard';
-import Athlete from './pages/Athlete';
-import Training from './pages/Training';
-import Home from './pages/Home';
 import Calendar from './pages/Calendar';
 import { GlobalStyles } from './styles/global.css';
 import LanguageSelector from './components/LanguageSelector';
@@ -23,9 +19,6 @@ import AdminDashboard from './pages/admin/Dashboard';
 import AthleteDashboard from './pages/athlete/Dashboard';
 import CoachDashboard from './pages/coach/Dashboard';
 import ParentDashboard from './pages/parent/Dashboard';
-// Add new imports here
-import NewPage1 from './pages/NewPage1';
-import NewPage2 from './pages/NewPage2';
 import AthletePerformance from './pages/athlete/Performance';
 import CoachPerformance from './pages/coach/Performance';
 
@@ -62,10 +55,6 @@ function App() {
                 <Container sx={{ mt: { xs: 8, md: 0 }, flexGrow: 1, overflowX: 'hidden' }}> {/* Rimuovi maxWidth */}
                   <Routes>
                     <Route path="/" element={<Welcome />} />
-                    <Route path="/home" element={<Home profileType={profileType} />} /> {/* Pass profileType to Home */}
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/atleti" element={<Athlete />} />
-                    <Route path="/training" element={<Training />} />
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/login" element={<Login setUser={setUser} setProfileType={setProfileType} />} /> {/* Pass setProfileType to Login */}
                     <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
@@ -74,9 +63,6 @@ function App() {
                     <Route path="/athlete/dashboard" element={<AthleteDashboard />} /> {/* Add AthleteDashboard route */}
                     <Route path="/coach/dashboard" element={<CoachDashboard />} /> {/* Add CoachDashboard route */}
                     <Route path="/parent/dashboard" element={<ParentDashboard />} /> {/* Add ParentDashboard route */}
-                    {/* Add new routes here */}
-                    <Route path="/newpage1" element={<NewPage1 />} />
-                    <Route path="/newpage2" element={<NewPage2 />} />
                     <Route path="/athlete/performance" element={<AthletePerformance />} />
                     <Route path="/coach/performance" element={<CoachPerformance />} />
                   </Routes>
