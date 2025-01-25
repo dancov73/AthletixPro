@@ -45,8 +45,9 @@ const Sidebar = ({ language, profileType }) => {
 
   const coachMenu = [
     { text: 'dashboard', link: '/coach/dashboard', icon: <DashboardIcon /> },
-    { text: 'athletes', link: '/coach/athletes', icon: <DirectionsRunIcon /> },
+    { text: 'performance', link: '/coach/performance', icon: <TrendingUpIcon /> },
     { text: 'messages', link: '/coach/messages', icon: <MailIcon /> },
+    { text: 'calendar', link: '/coach/calendar', icon: <CalendarTodayIcon /> },
   ];
 
   const parentMenu = [

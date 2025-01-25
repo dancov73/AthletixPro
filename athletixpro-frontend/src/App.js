@@ -26,6 +26,8 @@ import ParentDashboard from './pages/parent/Dashboard';
 // Add new imports here
 import NewPage1 from './pages/NewPage1';
 import NewPage2 from './pages/NewPage2';
+import AthletePerformance from './pages/athlete/Performance';
+import CoachPerformance from './pages/coach/Performance';
 
 const theme = createTheme({
   palette: {
@@ -75,6 +77,8 @@ function App() {
                     {/* Add new routes here */}
                     <Route path="/newpage1" element={<NewPage1 />} />
                     <Route path="/newpage2" element={<NewPage2 />} />
+                    <Route path="/athlete/performance" element={<AthletePerformance />} />
+                    <Route path="/coach/performance" element={<CoachPerformance />} />
                   </Routes>
                 </Container>
               </Box>
