@@ -101,7 +101,7 @@ const Sidebar = ({ language, profileType }) => {
           {menuItems.map((item, index) => (
             <ListItem button component={Link} to={item.link} key={index}>
               <ListItemIcon sx={{ minWidth: '36px' }}>{item.icon}</ListItemIcon> {/* Riduci lo spazio tra icona e voce */}
-              {!isSquare && !isPortrait && <ListItemText primary={t(`sidebar.${item.text}`)} />}
+              {!isSquare && !isPortrait && <ListItemText primary={t(item.text)} />}
             </ListItem>
           ))}
         </List>
