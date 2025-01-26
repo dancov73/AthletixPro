@@ -57,13 +57,7 @@ const Login = ({ setUser, setProfileType }) => {
       console.log('Login successful:', data.user);
       setUser(data.user);
 
-      // Check if email is confirmed
-      const user = await getUserById(data.user.id);
-      if (!user || !user.is_email_confirmed) {
-        setErrors({ ...errors, form: t('email_not_confirmed') });
-        return;
-      }
-
+      
       // Fetch user role from Supabase
       const { data: userData, error: userError } = await supabase
         .from('users')

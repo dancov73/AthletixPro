@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, MenuItem, IconButton, InputAdornment, Alert } from '@mui/material';
+import { Box, TextField, Button, MenuItem, IconButton, InputAdornment, Alert, Select, FormControl, InputLabel, Chip } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import countries from '../data/countries';
@@ -20,7 +20,7 @@ const RegistrationForm = ({ onSubmit }) => {
     country: '',
     team: '',
     sector: '',
-    role: '',
+    role: [], // Change role to an array
     dateOfBirth: '',
     parentName: '',
     parentSurname: '',
@@ -49,6 +49,11 @@ const RegistrationForm = ({ onSubmit }) => {
       country: selectedCountry.name,
       phone: selectedCountry.prefix
     });
+  };
+
+  const handleRoleChange = (event) => {
+    const { value } = event.target;
+    setFormData({ ...formData, role: typeof value === 'string' ? value.split(',') : value });
   };
 
   const validateEmail = (email) => {
@@ -98,7 +103,7 @@ const RegistrationForm = ({ onSubmit }) => {
     if (!formData.country) tempErrors.country = t('required');
     if (!formData.team) tempErrors.team = t('required');
     if (!formData.sector) tempErrors.sector = t('required');
-    if (!formData.role) tempErrors.role = t('required');
+    if (formData.role.length === 0) tempErrors.role = t('required'); // Validate role array
     if (!formData.dateOfBirth) tempErrors.dateOfBirth = t('required');
     if (isMinor) {
       if (!formData.parentName) {
@@ -137,7 +142,7 @@ const RegistrationForm = ({ onSubmit }) => {
         country: formData.country,
         team: formData.team,
         sector: formData.sector,
-        role: formData.role,
+        role: formData.role, // Ensure role array is included
         dateOfBirth: formData.dateOfBirth,
         parentName: formData.parentName || null,
         parentSurname: formData.parentSurname || null,
@@ -291,23 +296,27 @@ const RegistrationForm = ({ onSubmit }) => {
         <MenuItem value="giovanile">{t('youth')}</MenuItem>
         <MenuItem value="master">{t('master')}</MenuItem>
       </TextField>
-      <TextField
-        fullWidth
-        select
-        label={t('role')}
-        margin="normal"
-        required
-        name="role"
-        value={formData.role}
-        onChange={handleInputChange}
-        error={!!errors.role}
-        helperText={errors.role}
-      >
-        <MenuItem value="admin">{t('admin')}</MenuItem>
-        <MenuItem value="coach">{t('coach')}</MenuItem>
-        <MenuItem value="athlete">{t('athlete')}</MenuItem>
-        <MenuItem value="parent">{t('parent')}</MenuItem>
-      </TextField>
+      <FormControl fullWidth margin="normal" required error={!!errors.role}>
+        <InputLabel>{t('role')}</InputLabel>
+        <Select
+          multiple
+          value={formData.role}
+          onChange={handleRoleChange}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={t(value)} />
+              ))}
+            </Box>
+          )}
+        >
+          <MenuItem value="admin">{t('admin')}</MenuItem>
+          <MenuItem value="coach">{t('coach')}</MenuItem>
+          <MenuItem value="athlete">{t('athlete')}</MenuItem>
+          <MenuItem value="parent">{t('parent')}</MenuItem>
+        </Select>
+        {errors.role && <Typography color="error">{errors.role}</Typography>}
+      </FormControl>
       <TextField
         fullWidth
         label={t('date_of_birth')}
