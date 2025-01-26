@@ -57,6 +57,13 @@ const Login = ({ setUser, setProfileType }) => {
       console.log('Login successful:', data.user);
       setUser(data.user);
 
+      // Check if email is confirmed
+      const user = await getUserById(data.user.id);
+      if (!user || !user.is_email_confirmed) {
+        setErrors({ ...errors, form: t('email_not_confirmed') });
+        return;
+      }
+
       // Fetch user role from Supabase
       const { data: userData, error: userError } = await supabase
         .from('users')
@@ -68,7 +75,7 @@ const Login = ({ setUser, setProfileType }) => {
         console.error('Error fetching user role:', userError);
         setErrors({ ...errors, form: t('login_failed') });
       } else {
-        const profileType = userData.role.toLowerCase();
+        const profileType = userData.role.map(role => role.toLowerCase());
         setProfileType(profileType); // Set profile type
 
         // Navigate to the unified dashboard
@@ -77,14 +84,36 @@ const Login = ({ setUser, setProfileType }) => {
     }
   };
 
+  const getUserById = async (userId) => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('is_email_confirmed')
+      .eq('id', userId)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        console.error('Error fetching user: No rows returned');
+      } else {
+        console.error('Error fetching user:', error);
+      }
+      return null;
+    }
+    return data;
+  };
+
   const fetchSupabaseLogs = async () => {
     const { data, error } = await supabase
       .from('edge_logs')
-      .select('cast(timestamp as datetime) as timestamp, event_message, metadata')
+      .select('timestamp, event_message, metadata') // Removed cast function
       .limit(5);
 
     if (error) {
-      console.error('Error fetching logs:', error);
+      if (error.code === '42P01') {
+        console.error('Error fetching logs: Table does not exist');
+      } else {
+        console.error('Error fetching logs:', error);
+      }
     } else {
       console.log('Supabase logs:', data);
     }
