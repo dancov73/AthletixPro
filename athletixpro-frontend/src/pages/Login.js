@@ -71,23 +71,8 @@ const Login = ({ setUser, setProfileType }) => {
         const profileType = userData.role.toLowerCase();
         setProfileType(profileType); // Set profile type
 
-        // Navigate to the appropriate dashboard based on profile type
-        switch (profileType) {
-          case 'admin':
-            navigate('/admin/dashboard');
-            break;
-          case 'athlete':
-            navigate('/athlete/dashboard');
-            break;
-          case 'coach':
-            navigate('/coach/dashboard');
-            break;
-          case 'parent':
-            navigate('/parent/dashboard');
-            break;
-          default:
-            navigate('/home'); // Fallback to home if profile type is unknown
-        }
+        // Navigate to the unified dashboard
+        navigate('/dashboard');
       }
     }
   };

@@ -15,12 +15,6 @@ import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import SocialCalendar from './pages/SocialCalendar';
 import RegistrationForm from './components/RegistrationForm';
-import AdminDashboard from './pages/admin/Dashboard';
-import AthleteDashboard from './pages/athlete/Dashboard';
-import CoachDashboard from './pages/coach/Dashboard';
-import ParentDashboard from './pages/parent/Dashboard';
-import AthletePerformance from './pages/athlete/Performance';
-import CoachPerformance from './pages/coach/Performance';
 
 const theme = createTheme({
   palette: {
@@ -59,12 +53,6 @@ function App() {
                     <Route path="/login" element={<Login setUser={setUser} setProfileType={setProfileType} />} /> {/* Pass setProfileType to Login */}
                     <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
                     <Route path="/calendario-sociale" element={<SocialCalendar />} /> {/* Add SocialCalendar route */}
-                    <Route path="/admin/dashboard" element={<AdminDashboard />} /> {/* Add AdminDashboard route */}
-                    <Route path="/athlete/dashboard" element={<AthleteDashboard />} /> {/* Add AthleteDashboard route */}
-                    <Route path="/coach/dashboard" element={<CoachDashboard />} /> {/* Add CoachDashboard route */}
-                    <Route path="/parent/dashboard" element={<ParentDashboard />} /> {/* Add ParentDashboard route */}
-                    <Route path="/athlete/performance" element={<AthletePerformance />} />
-                    <Route path="/coach/performance" element={<CoachPerformance />} />
                   </Routes>
                 </Container>
               </Box>

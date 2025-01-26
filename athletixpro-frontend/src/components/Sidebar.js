@@ -40,12 +40,10 @@ const Sidebar = ({ language, profileType }) => {
   const athleteMenu = [
     { text: 'dashboard', link: '/athlete/dashboard', icon: <DashboardIcon /> },
     { text: 'calendar', link: '/athlete/calendar', icon: <CalendarTodayIcon /> },
-    { text: 'performance', link: '/athlete/performance', icon: <TrendingUpIcon /> },
   ];
 
   const coachMenu = [
     { text: 'dashboard', link: '/coach/dashboard', icon: <DashboardIcon /> },
-    { text: 'performance', link: '/coach/performance', icon: <TrendingUpIcon /> },
     { text: 'messages', link: '/coach/messages', icon: <MailIcon /> },
     { text: 'calendar', link: '/coach/calendar', icon: <CalendarTodayIcon /> },
   ];
