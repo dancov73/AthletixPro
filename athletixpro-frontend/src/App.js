@@ -42,7 +42,7 @@ function App() {
         <CssBaseline />
         <I18nextProvider i18n={i18n}>
           <Router>
-            <Navbar language={language} setLanguage={setLanguage} user={user} /> {/* Removed setProfileType */}
+            <Navbar language={language} setLanguage={setLanguage} user={user} setProfileType={setProfileType} setUser={setUser} /> {/* Pass setUser */}
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, flexGrow: 1 }}>
                 <Sidebar language={language} profileType={profileType} /> {/* Pass profileType to Sidebar */}

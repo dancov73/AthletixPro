@@ -57,8 +57,7 @@ const Login = ({ setUser, setProfileType }) => {
       console.log('Login successful:', data.user);
       setUser(data.user);
 
-      
-      // Fetch user role from Supabase
+      // Fetch user roles from Supabase
       const { data: userData, error: userError } = await supabase
         .from('users')
         .select('role')
@@ -66,11 +65,21 @@ const Login = ({ setUser, setProfileType }) => {
         .single();
 
       if (userError) {
-        console.error('Error fetching user role:', userError);
+        if (userError.code === 'PGRST116') {
+          console.error('Error fetching user roles: No rows returned');
+        } else {
+          console.error('Error fetching user roles:', userError);
+        }
         setErrors({ ...errors, form: t('login_failed') });
       } else {
-        const profileType = userData.role.map(role => role.toLowerCase());
-        setProfileType(profileType); // Set profile type
+        const roles = typeof userData.role === 'string' ? userData.role.split(',') : [];
+        const highestRole = roles.reduce((max, role) => {
+          const rank = ['admin', 'coach', 'parent', 'athlete'].indexOf(role);
+          return rank > max.rank ? { role, rank } : max;
+        }, { role: roles[0], rank: 0 });
+
+        setProfileType(highestRole.role); // Set highest-ranked role
+        setUser({ ...data.user, roles }); // Store all roles for profile switching
 
         // Navigate to the unified dashboard
         navigate('/dashboard');
