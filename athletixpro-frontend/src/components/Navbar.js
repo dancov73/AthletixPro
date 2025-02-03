@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Button, Box, Menu, MenuItem, IconButton, Avatar, Typography } from '@mui/material';
-import { Menu as MenuIcon, MoreVert as MoreVertIcon } from '@mui/icons-material';
+import { AppBar, Toolbar, Button, Box, MenuItem, IconButton, Avatar, Typography } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,6 @@ import supabase from '../supabaseClient'; // Import supabase client
 const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { // Add setUser
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [moreAnchorEl, setMoreAnchorEl] = useState(null);
   const [roles, setRoles] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,18 +38,9 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { /
     fetchRoles();
   }, [user]);
 
-  const handleMoreMenuClick = (event) => {
-    setMoreAnchorEl(event.currentTarget);
-  };
-
-  const handleMoreMenuClose = () => {
-    setMoreAnchorEl(null);
-  };
-
   const handleRoleSelect = (role) => {
     setProfileType(role.toLowerCase());
     navigate('/dashboard');
-    handleMoreMenuClose();
   };
 
   const handleLogout = async () => {
@@ -166,26 +156,8 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { /
             {t('login')}
           </Button>
         )}
-        <IconButton
-          edge="end"
-          color="inherit"
-          aria-label="more"
-          onClick={handleMoreMenuClick}
-          sx={{ marginLeft: '10px' }}
-        >
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          anchorEl={moreAnchorEl}
-          open={Boolean(moreAnchorEl)}
-          onClose={handleMoreMenuClose}
-        >
-          {roles.map((role, index) => (
-            <MenuItem key={index} onClick={() => handleRoleSelect(role)}>
-              {t(role)}
-            </MenuItem>
-          ))}
-        </Menu>
+        {/* Removed IconButton for "More" menu */}
+        {/* Removed Menu component for "More" menu */}
       </Toolbar>
     </AppBar>
   );
