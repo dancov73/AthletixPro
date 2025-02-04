@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import supabase from '../supabaseClient'; // Import supabase client
 import logo from '../assets/images/logo09.png'; // Import logo
 
-const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSidebar }) => { // Add toggleSidebar
+const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { // Remove toggleSidebar
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [roles, setRoles] = useState([]);
@@ -31,6 +31,9 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
           } else {
             console.error('Error fetching roles:', error);
           }
+          setRoles([]);
+        } else if (!data) {
+          console.error('Error fetching roles: No data returned');
           setRoles([]);
         } else {
           setRoles(data.role ? data.role.split(',') : []); // Ensure roles are split into an array
@@ -105,7 +108,7 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="logo" onClick={toggleSidebar} sx={{ mr: 2 }}>
+        <IconButton edge="start" color="inherit" aria-label="logo" sx={{ mr: 2 }}>
           <img src={logo} alt="logo" style={{ width: 40, height: 40 }} />
         </IconButton>
         <IconButton edge="start" color="inherit" aria-label="menu1" sx={{ mr: 2 }} onClick={handleMenuOpen}>
@@ -208,6 +211,9 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
               open={Boolean(userMenuAnchorEl)}
               onClose={handleUserMenuClose}
             >
+              <MenuItem component={Link} to="/user" onClick={handleUserMenuClose}>
+                User
+              </MenuItem>
               <MenuItem onClick={handleUserMenuClose}>
                 <LanguageSelector setLanguage={setLanguage} sx={{ border: 'none' }} />
               </MenuItem>

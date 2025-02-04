@@ -6,7 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types'; // Import PropTypes for prop validation
 import supabase from '../supabaseClient'; // Updated import path
 
-const Login = ({ setUser, setProfileType }) => {
+const Login = ({ setUser, setProfileType }) => { // Remove setIsSidebarOpen prop
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);

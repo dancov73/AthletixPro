@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/authContext';
 import { createTheme } from '@mui/material/styles';
 import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
 import Calendar from './pages/Calendar';
 import { GlobalStyles } from './styles/global.css';
 import LanguageSelector from './components/LanguageSelector';
@@ -15,6 +14,7 @@ import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import SocialCalendar from './pages/SocialCalendar';
 import RegistrationForm from './components/RegistrationForm';
+import User from './pages/User'; // Import User page
 
 const theme = createTheme({
   palette: {
@@ -34,12 +34,7 @@ function App() {
   const [language, setLanguage] = useState('en');
   const [user, setUser] = useState(null); // Add user state
   const [profileType, setProfileType] = useState(''); // Initialize profileType state
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Add isSidebarOpen state
   const { t } = useTranslation();
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   return (
     <AuthProvider>
@@ -53,21 +48,18 @@ function App() {
               user={user}
               setProfileType={setProfileType}
               setUser={setUser}
-              toggleSidebar={toggleSidebar} // Pass toggleSidebar
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-              <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, flexGrow: 1 }}>
-                <Sidebar language={language} profileType={profileType} isSidebarOpen={isSidebarOpen} /> {/* Pass isSidebarOpen */}
-                <Container sx={{ mt: { xs: 8, md: 0 }, flexGrow: 1, overflowX: 'hidden' }}> {/* Rimuovi maxWidth */}
-                  <Routes>
-                    <Route path="/" element={<Welcome />} />
-                    <Route path="/calendar" element={<Calendar />} />
-                    <Route path="/login" element={<Login setUser={setUser} setProfileType={setProfileType} />} /> {/* Pass setProfileType to Login */}
-                    <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
-                    <Route path="/calendario-sociale" element={<SocialCalendar />} /> {/* Add SocialCalendar route */}
-                  </Routes>
-                </Container>
-              </Box>
+              <Container sx={{ mt: { xs: 8, md: 0 }, flexGrow: 1, overflowX: 'hidden' }}> {/* Rimuovi maxWidth */}
+                <Routes>
+                  <Route path="/" element={<Welcome />} />
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/login" element={<Login setUser={setUser} setProfileType={setProfileType} />} /> {/* Pass setProfileType to Login */}
+                  <Route path="/register" element={<RegistrationForm />} /> {/* Add RegistrationForm route */}
+                  <Route path="/calendario-sociale" element={<SocialCalendar />} /> {/* Add SocialCalendar route */}
+                  <Route path="/user" element={<User user={user} />} /> {/* Add User route */}
+                </Routes>
+              </Container>
             </Box>
           </Router>
         </I18nextProvider>
