@@ -57,7 +57,7 @@ function App() {
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, flexGrow: 1 }}>
-                {isSidebarOpen && <Sidebar language={language} profileType={profileType} />} {/* Conditionally render Sidebar */}
+                <Sidebar language={language} profileType={profileType} isSidebarOpen={isSidebarOpen} /> {/* Pass isSidebarOpen */}
                 <Container sx={{ mt: { xs: 8, md: 0 }, flexGrow: 1, overflowX: 'hidden' }}> {/* Rimuovi maxWidth */}
                   <Routes>
                     <Route path="/" element={<Welcome />} />

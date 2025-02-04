@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
-const Sidebar = ({ language, profileType }) => {
+const Sidebar = ({ language, profileType, isSidebarOpen }) => { // Add isSidebarOpen prop
   const { t } = useTranslation();
   const theme = useTheme();
   const isPortrait = useMediaQuery(theme.breakpoints.down('sm'));
@@ -70,8 +70,8 @@ const Sidebar = ({ language, profileType }) => {
   return (
     <>
       <Drawer
-        variant={isSquare ? 'permanent' : 'permanent'}
-        open={true}
+        variant={isSquare ? 'temporary' : 'permanent'} // Use 'temporary' for small screens
+        open={isSidebarOpen} // Use isSidebarOpen to control visibility
         onClose={handleDrawerToggle}
         sx={{
           width: isPortrait ? '100%' : isSquare ? '48px' : 'clamp(150px, 15vw, 200px)',

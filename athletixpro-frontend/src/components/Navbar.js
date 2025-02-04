@@ -116,8 +116,7 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
         >
           {user ? getPageName() : 'Athletix Pro'}
         </Button>
-        <Box sx={{ flexGrow: 1 }} /> {/* Add this line to push the button to the center */}
-        {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/register' && !user && (
+          {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/register' && !user && (
           <>
             <Button
               color="inherit"
