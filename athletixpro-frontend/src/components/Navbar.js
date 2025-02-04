@@ -12,6 +12,7 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
   const [anchorEl, setAnchorEl] = useState(null);
   const [roles, setRoles] = useState([]);
   const [userMenuAnchorEl, setUserMenuAnchorEl] = useState(null); // Add state for user menu
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null); // Add state for menu
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -70,6 +71,14 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
     setUserMenuAnchorEl(null);
   };
 
+  const handleMenuOpen = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
+
   const getPageName = () => {
     switch (location.pathname) {
       case '/dashboard':
@@ -78,6 +87,16 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
         return t('athleteMonitor');
       case '/calendario-sociale':
         return t('calendarioSociale');
+      case '/about':
+        return 'About';
+      case '/calendar':
+        return 'Calendar';
+      case '/performance':
+        return 'Performance';
+      case '/social-calendar':
+        return 'Social Calendar';
+      case '/welcome':
+        return 'Welcome';
       default:
         return 'Athletix Pro';
     }
@@ -89,9 +108,33 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
         <IconButton edge="start" color="inherit" aria-label="logo" onClick={toggleSidebar} sx={{ mr: 2 }}>
           <img src={logo} alt="logo" style={{ width: 40, height: 40 }} />
         </IconButton>
-        <IconButton edge="start" color="inherit" aria-label="menu1" sx={{ mr: 2 }}>
+        <IconButton edge="start" color="inherit" aria-label="menu1" sx={{ mr: 2 }} onClick={handleMenuOpen}>
           <MenuIcon />
         </IconButton>
+        <Menu
+          anchorEl={menuAnchorEl}
+          open={Boolean(menuAnchorEl)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem component={Link} to="/about" onClick={handleMenuClose}>
+            About
+          </MenuItem>
+          <MenuItem component={Link} to="/calendar" onClick={handleMenuClose}>
+            Calendar
+          </MenuItem>
+          <MenuItem component={Link} to="/dashboard" onClick={handleMenuClose}>
+            Dashboard
+          </MenuItem>
+          <MenuItem component={Link} to="/performance" onClick={handleMenuClose}>
+            Performance
+          </MenuItem>
+          <MenuItem component={Link} to="/social-calendar" onClick={handleMenuClose}>
+            Social Calendar
+          </MenuItem>
+          <MenuItem component={Link} to="/welcome" onClick={handleMenuClose}>
+            Welcome
+          </MenuItem>
+        </Menu>
         <Box sx={{ flexGrow: 1 }} /> {/* Add this line to push the button to the center */}
         <Button
           component={Link}
@@ -114,9 +157,10 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
             },
           }}
         >
-          {user ? getPageName() : 'Athletix Pro'}
+          {getPageName()}
         </Button>
-          {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/register' && !user && (
+        
+            {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/register' && !user && (
           <>
             <Button
               color="inherit"
@@ -150,15 +194,14 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
               color="inherit"
               onClick={handleUserMenuOpen}
               sx={{
-                color: 'white',
-                backgroundColor: '#e65100',
-                marginLeft: '10px',
+                padding: '5px', // Reduce padding
+                ml: 2, // Add margin-left to create space between buttons
                 '&:hover': {
-                  backgroundColor: '#bf360c',
+                  backgroundColor: 'transparent', // Remove background color on hover
                 },
               }}
             >
-              <Avatar alt={user.email} src="/static/images/avatar/1.jpg" />
+              <Avatar alt={user.email} src="/static/images/avatar/1.jpg" sx={{ width: 30, height: 30 }} /> {/* Reduce avatar size */}
             </IconButton>
             <Menu
               anchorEl={userMenuAnchorEl}
@@ -167,9 +210,6 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSi
             >
               <MenuItem onClick={handleUserMenuClose}>
                 <LanguageSelector setLanguage={setLanguage} sx={{ border: 'none' }} />
-              </MenuItem>
-              <MenuItem component={Link} to="/calendario-sociale" onClick={handleUserMenuClose}>
-                {t('calendarioSociale')}
               </MenuItem>
               <MenuItem onClick={handleLogout}>
                 {t('logout')}
