@@ -34,7 +34,12 @@ function App() {
   const [language, setLanguage] = useState('en');
   const [user, setUser] = useState(null); // Add user state
   const [profileType, setProfileType] = useState(''); // Initialize profileType state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Add isSidebarOpen state
   const { t } = useTranslation();
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <AuthProvider>
@@ -42,10 +47,17 @@ function App() {
         <CssBaseline />
         <I18nextProvider i18n={i18n}>
           <Router>
-            <Navbar language={language} setLanguage={setLanguage} user={user} setProfileType={setProfileType} setUser={setUser} /> {/* Pass setUser */}
+            <Navbar
+              language={language}
+              setLanguage={setLanguage}
+              user={user}
+              setProfileType={setProfileType}
+              setUser={setUser}
+              toggleSidebar={toggleSidebar} // Pass toggleSidebar
+            />
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, flexGrow: 1 }}>
-                <Sidebar language={language} profileType={profileType} /> {/* Pass profileType to Sidebar */}
+                {isSidebarOpen && <Sidebar language={language} profileType={profileType} />} {/* Conditionally render Sidebar */}
                 <Container sx={{ mt: { xs: 8, md: 0 }, flexGrow: 1, overflowX: 'hidden' }}> {/* Rimuovi maxWidth */}
                   <Routes>
                     <Route path="/" element={<Welcome />} />

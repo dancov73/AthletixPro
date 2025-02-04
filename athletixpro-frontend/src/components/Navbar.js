@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Button, Box, MenuItem, IconButton, Avatar, Typography } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { AppBar, Toolbar, Button, Box, MenuItem, IconButton, Avatar, Typography, Menu } from '@mui/material';
+import { Menu as MenuIcon, Notifications as NotificationsIcon } from '@mui/icons-material'; // Import Notifications icon
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
 import supabase from '../supabaseClient'; // Import supabase client
+import logo from '../assets/images/logo09.png'; // Import logo
 
-const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { // Add setUser
+const Navbar = ({ language, setLanguage, user, setProfileType, setUser, toggleSidebar }) => { // Add toggleSidebar
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [roles, setRoles] = useState([]);
+  const [userMenuAnchorEl, setUserMenuAnchorEl] = useState(null); // Add state for user menu
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,17 +59,40 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { /
     } catch (err) {
       console.error('Unexpected error during logout:', err);
     }
+    handleUserMenuClose(); // Close the menu on logout
+  };
+
+  const handleUserMenuOpen = (event) => {
+    setUserMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleUserMenuClose = () => {
+    setUserMenuAnchorEl(null);
+  };
+
+  const getPageName = () => {
+    switch (location.pathname) {
+      case '/dashboard':
+        return t('dashboard');
+      case '/athlete/monitor':
+        return t('athleteMonitor');
+      case '/calendario-sociale':
+        return t('calendarioSociale');
+      default:
+        return 'Athletix Pro';
+    }
   };
 
   return (
     <AppBar position="sticky">
       <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="logo" onClick={toggleSidebar} sx={{ mr: 2 }}>
+          <img src={logo} alt="logo" style={{ width: 40, height: 40 }} />
+        </IconButton>
         <IconButton edge="start" color="inherit" aria-label="menu1" sx={{ mr: 2 }}>
           <MenuIcon />
         </IconButton>
-        <Link to="/">
-          {/* Removed athlete icon */}
-        </Link>
+        <Box sx={{ flexGrow: 1 }} /> {/* Add this line to push the button to the center */}
         <Button
           component={Link}
           to="/"
@@ -89,10 +114,10 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { /
             },
           }}
         >
-          Athletix Pro
+          {user ? getPageName() : 'Athletix Pro'}
         </Button>
-        <Box sx={{ flexGrow: 1 }} />
-        {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/register' && (
+        <Box sx={{ flexGrow: 1 }} /> {/* Add this line to push the button to the center */}
+        {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/register' && !user && (
           <>
             <Button
               color="inherit"
@@ -111,14 +136,20 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { /
             </Button>
           </>
         )}
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <LanguageSelector setLanguage={setLanguage} sx={{ border: 'none' }} />
-        </Box>
+        {!user && (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <LanguageSelector setLanguage={setLanguage} sx={{ border: 'none' }} />
+          </Box>
+        )}
         {user ? (
           <>
-            <Button
+            <Box sx={{ flexGrow: 1 }} /> {/* Add this line to push the buttons to the right */}
+            <IconButton color="inherit" sx={{ ml: 2 }}>
+              <NotificationsIcon />
+            </IconButton>
+            <IconButton
               color="inherit"
-              onClick={handleLogout}
+              onClick={handleUserMenuOpen}
               sx={{
                 color: 'white',
                 backgroundColor: '#e65100',
@@ -128,16 +159,23 @@ const Navbar = ({ language, setLanguage, user, setProfileType, setUser }) => { /
                 },
               }}
             >
-              {t('logout')}
-            </Button>
-            {user && (
-              <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
-                <Avatar alt={user.email} src="/static/images/avatar/1.jpg" />
-                <Box sx={{ marginLeft: '10px', color: 'white' }}>
-                  <Typography variant="body2">{user.roles && user.roles.join(', ')}</Typography>
-                </Box>
-              </Box>
-            )}
+              <Avatar alt={user.email} src="/static/images/avatar/1.jpg" />
+            </IconButton>
+            <Menu
+              anchorEl={userMenuAnchorEl}
+              open={Boolean(userMenuAnchorEl)}
+              onClose={handleUserMenuClose}
+            >
+              <MenuItem onClick={handleUserMenuClose}>
+                <LanguageSelector setLanguage={setLanguage} sx={{ border: 'none' }} />
+              </MenuItem>
+              <MenuItem component={Link} to="/calendario-sociale" onClick={handleUserMenuClose}>
+                {t('calendarioSociale')}
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                {t('logout')}
+              </MenuItem>
+            </Menu>
           </>
         ) : (
           <Button
